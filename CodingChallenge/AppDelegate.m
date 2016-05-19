@@ -6,6 +6,8 @@
 //  Copyright © 2016 Iván Corchado Ruiz. All rights reserved.
 //
 
+#import "MainCollectionViewController.h"
+#import "UIColor+LWColors.h"
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -16,8 +18,31 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    [self setupWindow];
+    [self setupRootViewController];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor],
+                                                           NSFontAttributeName: [UIFont systemFontOfSize:17 weight:UIFontWeightRegular]
+                                                           }];
+    
     return YES;
+}
+
+- (void) setupWindow {
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.tintColor = [UIColor themeTintColor];
+    [self.window makeKeyAndVisible];
+}
+
+- (void) setupRootViewController {
+    
+    MainCollectionViewController *mainCollectionVC = [[MainCollectionViewController alloc] init];
+    
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:mainCollectionVC];
+    self.window.rootViewController = navController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

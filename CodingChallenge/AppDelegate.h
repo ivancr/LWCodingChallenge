@@ -6,8 +6,9 @@
 //  Copyright © 2016 Iván Corchado Ruiz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+
 #import <CoreData/CoreData.h>
+#import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
