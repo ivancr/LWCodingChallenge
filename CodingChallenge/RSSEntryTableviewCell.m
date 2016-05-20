@@ -40,7 +40,6 @@
         paddingForEditingMode = 0;
     }
     
-    
     if (_isSelected) {
         wrapperFrame.size.height    = CGRectGetHeight([[self entryName] frame]) + CGRectGetHeight([[self entryArtist] frame]) + kPadding8px ;
         wrapperFrame.size.width     = [self frame].size.width - kPadding16px - paddingForEditingMode;
@@ -98,10 +97,10 @@
 
 - (UILabel *)entryName {
     if (!_entryName) {
-        _entryName                  = [[UILabel alloc] init];
-        _entryName.textColor        = [UIColor darkGrayColor];
-        _entryName.textAlignment    = NSTextAlignmentLeft;
-        [self.entryName setFont:[UIFont cellMediaTypeNameFont]];
+        _entryName = [[UILabel alloc] init];
+        [[self entryName] setTextColor:[UIColor darkGrayColor]];
+        [[self entryName] setTextAlignment:NSTextAlignmentLeft];
+        [[self entryName] setFont:[UIFont cellMediaTypeNameFont]];
         [[self wrapperLabelsView] addSubview:_entryName];
         return _entryName;
     }
@@ -111,9 +110,9 @@
 - (UILabel *)entryArtist {
     if (!_entryArtist) {
         _entryArtist = [[UILabel alloc] init];
-        [_entryArtist setTextColor: [UIColor lightGrayColor]];
-        [_entryArtist setTextAlignment: NSTextAlignmentLeft];
-        [_entryArtist setFont: [UIFont cellMediaTypeArtistFont]];
+        [[self entryArtist] setTextColor: [UIColor lightGrayColor]];
+        [[self entryArtist] setTextAlignment: NSTextAlignmentLeft];
+        [[self entryArtist] setFont: [UIFont cellMediaTypeArtistFont]];
         [[self wrapperLabelsView] addSubview:_entryArtist];
         return _entryArtist;
     }
@@ -123,9 +122,9 @@
 - (UILabel *)price{
     if (!_price){
         _price = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_price setTextColor: [UIColor lightGrayColor]];
-        [_price setTextAlignment: NSTextAlignmentRight];
-        [_price setFont: [UIFont cellMediaTypeArtistFont]];
+        [[self price] setTextColor: [UIColor lightGrayColor]];
+        [[self price] setTextAlignment: NSTextAlignmentRight];
+        [[self price] setFont: [UIFont cellMediaTypeArtistFont]];
         [[self wrapperLabelsView] addSubview:_price];
         return _price;
     }
@@ -135,7 +134,7 @@
 - (UIImageView *)entryImageView {
     if (!_entryImageView) {
         _entryImageView = [[UIImageView alloc] initWithFrame: CGRectZero];
-        [_entryImageView setContentMode: UIViewContentModeScaleAspectFit];
+        [[self entryImageView] setContentMode: UIViewContentModeScaleAspectFit];
         [self addSubview:_entryImageView];
         return _entryImageView;
     }
@@ -149,8 +148,6 @@
     _price.text           = nil;
     _entryImageView.image   = nil;
 }
-
-
 
 #pragma mark - Setter
 

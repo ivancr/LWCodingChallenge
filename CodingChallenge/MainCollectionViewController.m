@@ -12,9 +12,9 @@
 #import "MainController.h"
 
 static NSString *reuseIdentifier = @"mediaTypeCell";
-static NSString *navTitle = @"iTunes Store Top 10";
 
-#define kLocStringBack        NSLocalizedString(@"Back", @"Back")
+#define kLocStringBack          NSLocalizedString(@"Back", @"Back")
+#define kLocStringNavTitle      NSLocalizedString(@"iTunes Store Top 10","iTunes Store Top 10")
 
 #define kCellHeight             (150)
 #define kCellSeparatorHeight    (  2)
@@ -41,9 +41,11 @@ static NSString *navTitle = @"iTunes Store Top 10";
     
     CGRect collectionFrame      = [[self mediaTypesCollectionView] frame];
     collectionFrame.origin      = CGPointZero;
-    collectionFrame.size.height = CGRectGetHeight([[self view] bounds]);
-    collectionFrame.size.width  = CGRectGetWidth([[self view] bounds]);
+    collectionFrame.size.height = CGRectGetHeight([[self view] frame]);
+    collectionFrame.size.width  = CGRectGetWidth([[self view] frame]);
     [[self mediaTypesCollectionView] setFrame:collectionFrame];
+    
+    [[[self mediaTypesCollectionView] collectionViewLayout] invalidateLayout];
 }
 
 #pragma mark - Views
@@ -55,7 +57,6 @@ static NSString *navTitle = @"iTunes Store Top 10";
         [_mediaTypesCollectionView setDataSource:self];
         [_mediaTypesCollectionView setDelegate:self];
         [_mediaTypesCollectionView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.3]];
-        [_mediaTypesCollectionView.collectionViewLayout invalidateLayout];
         [[self view] addSubview:_mediaTypesCollectionView];
     }
     return _mediaTypesCollectionView;
@@ -106,10 +107,10 @@ static NSString *navTitle = @"iTunes Store Top 10";
     return UIEdgeInsetsZero;
 }
 
-#pragma mark - Helper Methods
+#pragma mark - Selectors
 
 - (void)setUpTitles {
-    [self setTitle:navTitle];
+    [self setTitle:kLocStringNavTitle];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kLocStringBack
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:nil

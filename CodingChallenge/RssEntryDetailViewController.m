@@ -41,9 +41,9 @@
     [[self detailView] setFrame: detailViewFrame];
     
     if ([[self view] traitCollection].verticalSizeClass == UIUserInterfaceSizeClassCompact) {
-        [_detailView setConfiguration:kSizeClassCompact];
+        [[self detailView] setConfiguration:kSizeClassCompact];
     } else {
-        [_detailView setConfiguration:kDefault];
+        [[self detailView] setConfiguration:kDefault];
     }
 }
 
@@ -56,17 +56,11 @@
     return _detailView;
 }
 
-
-
 #pragma mark - Setters
 
 -(void)setRssEntry:(RSSEntry *)rssEntry {
     _rssEntry = rssEntry;
     [_detailView setRssEntry:_rssEntry];
 }
-
-#pragma mark - Helper Methods
-
-
 
 @end

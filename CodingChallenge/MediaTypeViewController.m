@@ -14,8 +14,8 @@
 #import "UIColor+LWColors.h"
 #import "RSSEntry.h"
 
-static NSString *kReuseIdentifier = @"rssEntryCell";
-static NSString *kImagePlaceholderString = @"placeholder";
+static NSString *kReuseIdentifier           = @"rssEntryCell";
+static NSString *kImagePlaceholderString    = @"placeholder";
 
 #define kLocStringLoading   NSLocalizedString(@"Loading...", @"Loading...")
 #define kLocStringOK        NSLocalizedString(@"OK", @"OK")
@@ -92,11 +92,11 @@ static NSString *kImagePlaceholderString = @"placeholder";
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-        [_tableView setDelegate:self];
-        [_tableView setDataSource:self];
-        [_tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-        [_tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
-        [_tableView setAllowsSelectionDuringEditing:YES];
+        [[self tableView] setDelegate:self];
+        [[self tableView] setDataSource:self];
+        [[self tableView] setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+        [[self tableView] setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
+        [[self tableView] setAllowsSelectionDuringEditing:YES];
         [[self view] addSubview:_tableView];
         return _tableView;
     }
@@ -106,10 +106,10 @@ static NSString *kImagePlaceholderString = @"placeholder";
 - (UIButton *)addNewButton{
     if (!_addNewButton){
         _addNewButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_addNewButton addTarget:self action:@selector(didTapAddNewEntry) forControlEvents:UIControlEventTouchUpInside];
-        [_addNewButton setBackgroundColor:[[UIColor themeTintColor] colorWithAlphaComponent:0.6f]];
-        [_addNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_addNewButton setTitle:@"Add New" forState:UIControlStateNormal];
+        [[self addNewButton] addTarget:self action:@selector(didTapAddNewEntry) forControlEvents:UIControlEventTouchUpInside];
+        [[self addNewButton] setBackgroundColor:[[UIColor themeTintColor] colorWithAlphaComponent:0.6f]];
+        [[self addNewButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [[self addNewButton] setTitle:@"Add New" forState:UIControlStateNormal];
         [[self view] insertSubview:_addNewButton aboveSubview:[self buttonBlurView]];
         return _addNewButton;
     }
@@ -130,8 +130,8 @@ static NSString *kImagePlaceholderString = @"placeholder";
 - (UIView *)spinnerView {
     if (!_spinnerView) {
         _spinnerView = [[UIView alloc] init];
-        [_spinnerView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.2]];
-        [_spinnerView setHidden:YES];
+        [[self spinnerView] setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.2]];
+        [[self spinnerView] setHidden:YES];
         [[self view] insertSubview:_spinnerView aboveSubview:_tableView];
         return _spinnerView;
     }
@@ -141,7 +141,7 @@ static NSString *kImagePlaceholderString = @"placeholder";
 - (UIActivityIndicatorView *)spinner {
     if (!_spinner) {
         _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        [_spinner setColor: [UIColor themeTintColor]];
+        [[self spinner] setColor: [UIColor themeTintColor]];
         [[self spinnerView] addSubview:_spinner];
         return _spinner;
     }
@@ -151,11 +151,11 @@ static NSString *kImagePlaceholderString = @"placeholder";
 - (UILabel *)spinnerLabel{
     if (!_spinnerLabel) {
         _spinnerLabel = [[UILabel alloc] init];
-        [_spinnerLabel setText: kLocStringLoading];
-        [_spinnerLabel setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightThin]];
-        [_spinnerLabel setTextAlignment:NSTextAlignmentCenter];
-        [_spinnerLabel setTextColor:[UIColor themeTintColor]];
-        [_spinnerLabel sizeToFit];
+        [[self spinnerLabel] setText: kLocStringLoading];
+        [[self spinnerLabel] setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightThin]];
+        [[self spinnerLabel] setTextAlignment:NSTextAlignmentCenter];
+        [[self spinnerLabel] setTextColor:[UIColor themeTintColor]];
+        [[self spinnerLabel] sizeToFit];
         [[self spinnerView] addSubview:_spinnerLabel];
         return _spinnerLabel;
     }
@@ -176,9 +176,9 @@ static NSString *kImagePlaceholderString = @"placeholder";
 - (UIRefreshControl *)refreshControl {
     if (!_refreshControl) {
         _refreshControl = [[UIRefreshControl alloc] init];
-        _refreshControl.backgroundColor = [UIColor themeTintColor];
-        _refreshControl.tintColor = [UIColor whiteColor];
-        [_refreshControl addTarget:self
+        [[self refreshControl] setBackgroundColor:[UIColor themeTintColor]];
+        [[self refreshControl] setTintColor:[UIColor whiteColor]];
+        [[self refreshControl] addTarget:self
                             action:@selector(refreshCurrentList)
                   forControlEvents:UIControlEventValueChanged];
         [[self tableView] addSubview:self.refreshControl];
@@ -320,7 +320,7 @@ static NSString *kImagePlaceholderString = @"placeholder";
     NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
                                                                 forKey:NSForegroundColorAttributeName];
     NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
-    self.refreshControl.attributedTitle = attributedTitle;
+    [[self refreshControl] setAttributedTitle:attributedTitle];
     
     [[self controller] fetchDataWithMediaType:[self mediaType] completion: ^ (NSError * error){
         if (error) {
@@ -338,9 +338,9 @@ static NSString *kImagePlaceholderString = @"placeholder";
     [[self tableView] setEditing:![[self tableView] isEditing] animated:YES];
     
     if ([[self tableView] isEditing]) {
-        _editBarButtonItem.title = kLocStringDone;
+        [[self editButtonItem] setTitle:kLocStringDone];
     } else {
-        _editBarButtonItem.title = kLocStringEdit;
+        [[self editButtonItem] setTitle:kLocStringEdit];
     }
 }
 

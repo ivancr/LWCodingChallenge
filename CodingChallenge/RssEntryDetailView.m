@@ -145,9 +145,9 @@
 - (UILabel *)titleHeader {
     if (!_titleHeader) {
         _titleHeader = [[UILabel alloc] init];
-        [_titleHeader setTextColor:[UIColor detailHeaderColor]];
-        [_titleHeader setText:[kLocStringTitle uppercaseString]];
-        [_titleHeader setFont:[UIFont detailHeaderFont]];
+        [[self titleHeader] setTextColor:[UIColor detailHeaderColor]];
+        [[self titleHeader] setText:[kLocStringTitle uppercaseString]];
+        [[self titleHeader] setFont:[UIFont detailHeaderFont]];
         [[self labelsWrapperView] addSubview:_titleHeader];
         return _titleHeader;
     }
@@ -157,9 +157,9 @@
 - (UILabel *)titleLabel{
     if (!_titleLabel){
         _titleLabel = [[UILabel alloc] init];
-        [_titleLabel setTextColor:[UIColor detailTitleColor]];
-        [_titleLabel setNumberOfLines:3];
-        [_titleLabel setFont:[UIFont detailTitleFont]];
+        [[self titleLabel] setTextColor:[UIColor detailTitleColor]];
+        [[self titleLabel] setNumberOfLines:3];
+        [[self titleLabel] setFont:[UIFont detailTitleFont]];
         [[self labelsWrapperView] addSubview:_titleLabel];
         return _titleLabel;
     }
@@ -169,10 +169,10 @@
 - (UILabel *)artistHeader {
     if (!_artistHeader) {
         _artistHeader = [[UILabel alloc] init];
-        [_artistHeader setTextColor:[UIColor detailHeaderColor]];
-        [_artistHeader setText:[kLocStringArtist uppercaseString]];
-        [_artistHeader setFont:[UIFont detailHeaderFont]];
-        [_artistHeader sizeToFit];
+        [[self artistHeader] setTextColor:[UIColor detailHeaderColor]];
+        [[self artistHeader] setText:[kLocStringArtist uppercaseString]];
+        [[self artistHeader] setFont:[UIFont detailHeaderFont]];
+        [[self artistHeader] sizeToFit];
         [[self labelsWrapperView] addSubview:_artistHeader];
         return _artistHeader;
     }
@@ -182,9 +182,9 @@
 - (UILabel *)artistLabel{
     if (!_artistLabel){
         _artistLabel = [[UILabel alloc] init];
-        [_artistLabel setTextColor:[UIColor detailTitleColor]];
-        [_artistLabel setNumberOfLines:0];
-        [_artistLabel setFont:[UIFont detailTitleFont]];
+        [[self artistLabel] setTextColor:[UIColor detailTitleColor]];
+        [[self artistLabel] setNumberOfLines:0];
+        [[self artistLabel] setFont:[UIFont detailTitleFont]];
         [[self labelsWrapperView] addSubview:_artistLabel];
         return _artistLabel;
     }
@@ -194,10 +194,10 @@
 - (UILabel *)dateHeader {
     if (!_dateHeader) {
         _dateHeader = [[UILabel alloc] init];
-        [_dateHeader setTextColor:[UIColor detailHeaderColor]];
-        [_dateHeader setText:[kLocStringReleaseDate uppercaseString]];
-        [_dateHeader setFont:[UIFont detailHeaderFont]];
-        [_dateHeader sizeToFit];
+        [[self dateHeader] setTextColor:[UIColor detailHeaderColor]];
+        [[self dateHeader] setText:[kLocStringReleaseDate uppercaseString]];
+        [[self dateHeader] setFont:[UIFont detailHeaderFont]];
+        [[self dateHeader] sizeToFit];
         [[self labelsWrapperView] addSubview:_dateHeader];
         return _dateHeader;
     }
@@ -207,8 +207,8 @@
 - (UILabel *)dateLabel{
     if (!_dateLabel){
         _dateLabel = [[UILabel alloc] init];
-        [_dateLabel setTextColor:[UIColor detailTitleColor]];
-        [_dateLabel setFont:[UIFont detailTitleFont]];
+        [[self dateLabel] setTextColor:[UIColor detailTitleColor]];
+        [[self dateLabel] setFont:[UIFont detailTitleFont]];
         [[self labelsWrapperView] addSubview:_dateLabel];
         return _dateLabel;
     }
@@ -218,10 +218,10 @@
 - (UILabel *)categoryHeader {
     if (!_categoryHeader) {
         _categoryHeader = [[UILabel alloc] init];
-        [_categoryHeader setTextColor:[UIColor detailHeaderColor]];
-        [_categoryHeader setText:[kLocStringCategory uppercaseString]];
-        [_categoryHeader setFont:[UIFont detailHeaderFont]];
-        [_categoryHeader sizeToFit];
+        [[self categoryHeader] setTextColor:[UIColor detailHeaderColor]];
+        [[self categoryHeader] setText:[kLocStringCategory uppercaseString]];
+        [[self categoryHeader] setFont:[UIFont detailHeaderFont]];
+        [[self categoryHeader] sizeToFit];
         [[self labelsWrapperView] addSubview:_categoryHeader];
         return _categoryHeader;
     }
@@ -231,8 +231,8 @@
 - (UILabel *)categoryLabel{
     if (!_categoryLabel){
         _categoryLabel = [[UILabel alloc] init];
-        [_categoryLabel setTextColor:[UIColor detailTitleColor]];
-        [_categoryLabel setFont:[UIFont detailTitleFont]];
+        [[self categoryLabel] setTextColor:[UIColor detailTitleColor]];
+        [[self categoryLabel] setFont:[UIFont detailTitleFont]];
         [[self labelsWrapperView] addSubview:_categoryLabel];
         return _categoryLabel;
     }
@@ -364,8 +364,8 @@
     [_imageWrapperView setAlpha:0];
     
     [UIView animateWithDuration:0.4 delay:delay usingSpringWithDamping:0.6 initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [_image setAlpha:1];
-        [_imageWrapperView setAlpha:1];
+        [[self image] setAlpha:1];
+        [[self imageWrapperView] setAlpha:1];
         
         if (_configuration == kSizeClassCompact) {
             [self layoutLandscape];

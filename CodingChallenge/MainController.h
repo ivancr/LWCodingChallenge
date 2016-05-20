@@ -10,8 +10,8 @@
 
 @interface MainController : NSObject
 
-@property (nonatomic, strong) NSArray *mediaTypes;
-@property (nonatomic, strong) NSDictionary *mediaTypesTitles;
+@property (nonatomic, strong) NSArray       *mediaTypes;
+@property (nonatomic, strong) NSDictionary  *mediaTypesTitles;
 
 - (id)init;
 

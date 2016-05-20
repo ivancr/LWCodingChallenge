@@ -6,12 +6,10 @@
 //  Copyright © 2016 dgtl. All rights reserved.
 //
 
+#import "UIImageView+AFNetworking.h"
 #import "MediaTypeController.h"
 #import "NetworkingAPI.h"
-#import "UIImageView+AFNetworking.h"
 #import "RSSEntry.h"
-
-
 
 @implementation MediaTypeController
 
@@ -25,7 +23,6 @@
         }
     }];
 }
-
 
 - (void) fetchOneRandomRSSEntryWithMediaType: (NSString *)mediaType completion:(void (^)(RSSEntry *, NSError *error))completionBlock {
     [NetworkingAPI fetchTopTenforMediaType:mediaType numberOfEntries:50 completionHandler:^(NSMutableArray *entriesArray, NSError *error) {

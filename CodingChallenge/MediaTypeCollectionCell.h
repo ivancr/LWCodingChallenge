@@ -6,8 +6,8 @@
 //  Copyright © 2016 dgtl. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "MainController.h"
+#import <UIKit/UIKit.h>
 
 @interface MediaTypeCollectionCell : UICollectionViewCell
 

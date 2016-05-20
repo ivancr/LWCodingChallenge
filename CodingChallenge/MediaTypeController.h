@@ -7,13 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "RSSEntryTableviewCell.h"
+#import <UIKit/UIKit.h>
 
 @interface MediaTypeController : NSObject
 
 @property (nonatomic, strong) NSMutableArray *rssEntries;
-
 
 - (void) fetchDataWithMediaType: (NSString *)mediaType completion:(void (^)(NSError *error))completionBlock;
 - (void) fetchOneRandomRSSEntryWithMediaType: (NSString *)mediaType completion:(void (^)(RSSEntry *, NSError *error))completionBlock;

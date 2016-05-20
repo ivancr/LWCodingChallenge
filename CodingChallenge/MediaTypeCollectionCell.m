@@ -14,18 +14,17 @@
 
 @interface MediaTypeCollectionCell()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel       *titleLabel;
+@property (nonatomic, strong) UIImageView   *imageView;
 
 @end
-
 
 @implementation MediaTypeCollectionCell
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        [self setBackgroundColor:[UIColor whiteColor]];
     }
     return self;
 }
@@ -78,14 +77,12 @@
     return _imageView;
 }
 
-
 #pragma mark - Setter
 
 - (void)setMediaTypeWithController:(MainController *)controller indexPath:(NSIndexPath *) indexPath{
-    NSString *key = [controller.mediaTypes objectAtIndex:indexPath.row];
-    [[self titleLabel] setText: [controller.mediaTypesTitles objectForKey:key]];
-    //[[self titleLabel] sizeToFit];
     
+    NSString *key = [controller.mediaTypes objectAtIndex:indexPath.row];
+    [[self titleLabel] setText:[controller.mediaTypesTitles objectForKey:key]];
     [[self imageView] setImage:[UIImage imageNamed:key]];
 }
 

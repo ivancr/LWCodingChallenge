@@ -13,9 +13,9 @@
 
 @property (nonatomic, strong, readonly) RSSEntry    *rssEntry;
 @property (nonatomic, assign, readonly) BOOL        isSelected;
-@property (nonatomic, strong) UILabel       *entryName;
+@property (nonatomic, strong          ) UILabel     *entryName;
 
-- (void) setRssEntry:(RSSEntry *)rssEntry;
+- (void)setRssEntry:(RSSEntry *)rssEntry;
 - (void)setIsSelected:(BOOL)isSelected;
 
 @end
