@@ -10,8 +10,11 @@
 #import "UIImageView+AFNetworking.h"
 #import "MediaTypeViewController.h"
 #import "RSSEntryTableviewCell.h"
+#import "AddNewViewController.h"
 #import "MediaTypeController.h"
+#import "RSSEntrySerializer.h"
 #import "UIColor+LWColors.h"
+#import "AppDelegate.h"
 #import "RSSEntry.h"
 
 static NSString *kReuseIdentifier           = @"rssEntryCell";
@@ -28,20 +31,20 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 #define kCellHeight                 (66)
 #define kPadding16px                (16)
 
-@interface MediaTypeViewController()
+@interface MediaTypeViewController() <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) MediaTypeController       *controller;
-@property (nonatomic, strong) UITableView               *tableView;
-@property (nonatomic, strong) UIButton                  *addNewButton;
-@property (nonatomic, strong) UIActivityIndicatorView   *spinner;
-@property (nonatomic, strong) UIView                    *spinnerView;
-@property (nonatomic, strong) UILabel                   *spinnerLabel;
-@property (nonatomic, strong) NSIndexPath               *editingIndexPath;
-@property (nonatomic, strong) RSSEntryTableviewCell     *lastCellSelected;
-@property (nonatomic, strong) UIBarButtonItem           *editBarButtonItem;
-@property (nonatomic, strong) UIRefreshControl          *refreshControl;
-@property (nonatomic, strong) NSMutableArray            *rowsDeletedArray;
-@property (nonatomic, strong) UIVisualEffectView        *buttonBlurView;
+@property (nonatomic, strong) MediaTypeController        *controller;
+@property (nonatomic, strong) UITableView                *tableView;
+@property (nonatomic, strong) UIButton                   *addNewButton;
+@property (nonatomic, strong) UIActivityIndicatorView    *spinner;
+@property (nonatomic, strong) UIView                     *spinnerView;
+@property (nonatomic, strong) UILabel                    *spinnerLabel;
+@property (nonatomic, strong) NSIndexPath                *editingIndexPath;
+@property (nonatomic, strong) RSSEntryTableviewCell      *lastCellSelected;
+@property (nonatomic, strong) UIBarButtonItem            *editBarButton;
+@property (nonatomic, strong) UIRefreshControl           *refreshControl;
+@property (nonatomic, strong) UIVisualEffectView         *buttonBlurView;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -49,15 +52,20 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    _controller = [[MediaTypeController alloc] init];
-    [self refreshControl];
     
+    [self refreshControl];
     [[self tableView] registerClass:[RSSEntryTableviewCell class] forCellReuseIdentifier:kReuseIdentifier];
-    [[self navigationItem] setRightBarButtonItem:[self editBarButtonItem]];
-    [self loadTopTenRssFeeds];
+    [[self navigationItem] setRightBarButtonItem:[self editBarButton]];
+    
     [self setUpTitles];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadTopTenRssFeeds];
+    
+}
+
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
@@ -78,6 +86,13 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     [[self addNewButton] setFrame:buttonFrame];
     [[self buttonBlurView] setFrame:buttonFrame];
     
+    
+    
+    [[self tableView] setContentInset:UIEdgeInsetsMake([[self tableView] contentInset].top,
+                                                      [[self tableView] contentInset].left,
+                                                      CGRectGetHeight([[self addNewButton] frame]),
+                                                      [[self tableView] contentInset].right)];
+    
     [_spinner setCenter:[self spinnerView].center];
     
     CGRect spinnerLabelFrame = [_spinner frame];
@@ -89,6 +104,14 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 
 #pragma mark - Views
 
+- (MediaTypeController *)controller {
+    if (!_controller) {
+        _controller = [[MediaTypeController alloc] init];
+        return _controller;
+    }
+    return _controller;
+}
+
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
@@ -96,7 +119,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
         [[self tableView] setDataSource:self];
         [[self tableView] setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
         [[self tableView] setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
-        [[self tableView] setAllowsSelectionDuringEditing:YES];
+        [[self tableView] setAllowsSelectionDuringEditing:NO];
         [[self view] addSubview:_tableView];
         return _tableView;
     }
@@ -162,15 +185,15 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     return _spinnerLabel;
 }
 
-- (UIBarButtonItem *)editBarButtonItem {
-    if (!_editBarButtonItem) {
-        _editBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kLocStringEdit
+- (UIBarButtonItem *)editBarButton {
+    if (!_editBarButton) {
+        _editBarButton = [[UIBarButtonItem alloc] initWithTitle:kLocStringEdit
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(didTapEditButton:)];
-        return _editBarButtonItem;
+        return _editBarButton;
     }
-    return _editBarButtonItem;
+    return _editBarButton;
 }
 
 - (UIRefreshControl *)refreshControl {
@@ -188,18 +211,28 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     return _refreshControl;
 }
 
-- (NSMutableArray *)rowsDeletedArray {
-    if (!_rowsDeletedArray){
-        _rowsDeletedArray = [[NSMutableArray alloc] init];
-        return _rowsDeletedArray;
+- (NSFetchedResultsController *)fetchedResultsController {
+    if (!_fetchedResultsController) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kLWRSSEntryKey];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(mediaType==%@)", [self mediaType]];
+        [request setPredicate:pred];
+        request.sortDescriptors = @[];
+        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                        managedObjectContext:[self managedObjectContext]
+                                                                          sectionNameKeyPath:nil
+                                                                                   cacheName:nil];
+        [self.fetchedResultsController setDelegate:self];
+        return _fetchedResultsController;
     }
-    return _rowsDeletedArray;
+    return _fetchedResultsController;
 }
 
 #pragma mark - TableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self controller].rssEntries.count;
+    NSArray *sectionsArray = [[self fetchedResultsController] sections];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [sectionsArray objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 #pragma mark - TableViewDelegate
@@ -208,18 +241,19 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     
     RSSEntryTableviewCell *cell = [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
 //    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    [cell setTag:indexPath.row];
-    
-    [cell setRssEntry:[[self controller].rssEntries objectAtIndex:indexPath.row]];
+    [cell setRssEntry:[[self fetchedResultsController] objectAtIndexPath:indexPath]];
     [cell setIsSelected:(_editingIndexPath == indexPath)];
     
     return cell;
-     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[self tableView] isEditing]) {
+        return kCellHeight;
+    }
+    
     if ([_editingIndexPath isEqual: indexPath]) {
         return (kCellHeight * 2) + 80;
     }
@@ -228,7 +262,6 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //_editingIndexPath = _editingIndexPath == indexPath ? nil : indexPath;
     RSSEntryTableviewCell *currentCell = [tableView cellForRowAtIndexPath:indexPath];
     
     // First time any cell is selected
@@ -279,13 +312,38 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        [[self rowsDeletedArray] addObject:indexPath];
-        [[[self controller] rssEntries] removeObjectAtIndex:indexPath.row];
-        
-        [[self tableView] beginUpdates];
-        [[self tableView] deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [[self tableView] endUpdates];
+        NSArray *sectionsArray = [self.fetchedResultsController sections];
+        id <NSFetchedResultsSectionInfo> sectionInfo = [sectionsArray objectAtIndex:indexPath.section];
+        RSSEntry *rssEntry = [[sectionInfo objects] objectAtIndex:indexPath.row];
+        [[self managedObjectContext] deleteObject:rssEntry];
+        NSError *error;
+        [[self managedObjectContext] save:&error];
     }
+}
+
+#pragma mark - FRC Delegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [[self tableView] beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(nullable NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(nullable NSIndexPath *)newIndexPath {
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+            [[self tableView] insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [[self tableView] deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+        case NSFetchedResultsChangeUpdate:
+            break;
+        case NSFetchedResultsChangeMove:
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [[self tableView] endUpdates];
 }
 
 #pragma mark - Selectors
@@ -302,14 +360,24 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     [[self spinner] startAnimating];
     [self spinnerLabel];
     
-    [self.controller fetchDataWithMediaType:self.mediaType completion: ^ (NSError * error){
-        if (error) {
-            [self showAlertWithError:error];
-        }
+    if ([[self controller] countForRSSEntries: self.mediaType] < 1) {
+        [[self controller] fetchDataWithMediaType:self.mediaType completion: ^ (NSError * error){
+            if (error) {
+                [self showAlertWithError:error];
+            }
+            
+            [self performFRCFetch];
+            [[self tableView] reloadData];
+            [[self spinnerView] setHidden:YES];
+            [[self spinner] stopAnimating];
+        }];
+    } else {
+        [self performFRCFetch];
         [[self tableView] reloadData];
         [[self spinnerView] setHidden:YES];
         [[self spinner] stopAnimating];
-    }];
+    }
+    
 }
 
 - (void)refreshCurrentList {
@@ -321,42 +389,41 @@ static NSString *kImagePlaceholderString    = @"placeholder";
                                                                 forKey:NSForegroundColorAttributeName];
     NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
     [[self refreshControl] setAttributedTitle:attributedTitle];
+    [self refreshServerData];
+}
+
+- (void)refreshServerData {
     
-    [[self controller] fetchDataWithMediaType:[self mediaType] completion: ^ (NSError * error){
+    [[self controller] fetchDataWithMediaType:self.mediaType completion: ^ (NSError * error){
         if (error) {
             [self showAlertWithError:error];
-        } else {
-            [[self tableView] reloadData];
-            [[self rowsDeletedArray] removeAllObjects];
-            [[self refreshControl] endRefreshing];
         }
+        
+        [self performFRCFetch];
+        //[[self tableView] reloadData];
+        [[self refreshControl] endRefreshing];
     }];
 }
 
-
 - (void)didTapEditButton:(UIButton *)sender{
+    
     [[self tableView] setEditing:![[self tableView] isEditing] animated:YES];
     
+    [[self tableView] beginUpdates];
+    _editingIndexPath = nil;
     if ([[self tableView] isEditing]) {
-        [[self editButtonItem] setTitle:kLocStringDone];
+        [[self editBarButton] setTitle:kLocStringDone];
     } else {
-        [[self editButtonItem] setTitle:kLocStringEdit];
+        [[self editBarButton] setTitle:kLocStringEdit];
     }
+    [[self tableView] endUpdates];
 }
 
 - (void)didTapAddNewEntry {
-    [[self controller] fetchOneRandomRSSEntryWithMediaType:[self mediaType] completion:^(RSSEntry *randomEntry, NSError *error) {
-        if (error) {
-            [self showAlertWithError:error];
-        } else {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [[[self controller] rssEntries] insertObject:randomEntry atIndex:0];
-            
-            [[self tableView] beginUpdates];
-            [[self tableView] insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-            [[self tableView] endUpdates];
-        }
-    }];
+    AddNewViewController *addNewVC = [[AddNewViewController alloc] init];
+    [addNewVC setMediaType:_mediaType];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:addNewVC];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 
@@ -370,6 +437,17 @@ static NSString *kImagePlaceholderString    = @"placeholder";
         
         [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert animated:YES completion:nil];
     });
+}
+
+- (NSManagedObjectContext *)managedObjectContext {
+    AppDelegate *appDelegate        = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = appDelegate.managedObjectContext;
+    return context;
+}
+
+- (void)performFRCFetch {
+    NSError *error = nil;
+    [self.fetchedResultsController performFetch:&error];
 }
 
 

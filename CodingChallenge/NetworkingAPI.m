@@ -13,36 +13,26 @@
 #import "RSSEntry.h"
 
 
-static const NSString *rssFeedURL = @"https://itunes.apple.com/us/rss/";
-static const NSString *dataFormat = @"json";
-static const NSString *numberOfEntriesBase = @"/limit=";
+static const NSString *rssFeedURL           = @"https://itunes.apple.com/us/rss/";
+static const NSString *dataFormat           = @"json";
+static const NSString *numberOfEntriesBase  = @"/limit=";
 
 @implementation NetworkingAPI
 
-- (void) setNumberOfEntries:(NSString *)numberOfEntries {
-    _numberOfEntries = numberOfEntries;
++ (void) fetchTopTenforMediaType:(NSString *)mediaType numberOfEntries:(NSInteger)numberOfEntries completionHandler:(void (^)(NSArray *, NSError *))completionBlock {
     
-}
-
-+ (void) fetchTopTenforMediaType:(NSString *)mediaType numberOfEntries:(NSInteger)numberOfEntries completionHandler:(void (^)(NSMutableArray *, NSError *))completionBlock; {
-    NSMutableArray * entriesArray = [[NSMutableArray alloc] init];
-    NSString *entryString = [NSString stringWithFormat:@"%@%ld/",numberOfEntriesBase,(long)numberOfEntries];
-    
-    NSString *URLString = [NSString stringWithFormat:@"%@%@%@%@", rssFeedURL, mediaType, entryString, dataFormat];
-    NSURL *url = [NSURL URLWithString:URLString];
+    NSString *entryString   = [NSString stringWithFormat:@"%@%ld/",numberOfEntriesBase,(long)numberOfEntries];
+    NSString *URLString     = [NSString stringWithFormat:@"%@%@%@%@", rssFeedURL, mediaType, entryString, dataFormat];
+    NSURL *url              = [NSURL URLWithString:URLString];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         
         NSDictionary *responseDict = [NSString valueOrNilForKey:@"feed" fromContainer:(NSDictionary *)responseObject];
         NSArray *entries = [NSString valueOrNilForKey:@"entry" fromContainer:responseDict];
-
-        [entries enumerateObjectsUsingBlock:^(NSDictionary *entry, NSUInteger idx, BOOL *stop) {
-            [entriesArray addObject:[RSSEntrySerializer serializeRssEntryWithDictionary:entry]];
-        }];
         
         if (completionBlock) {
-            completionBlock(entriesArray, nil);
+            completionBlock(entries, nil);
         }
         
     } failure:^(NSURLSessionTask *operation, NSError *error) {

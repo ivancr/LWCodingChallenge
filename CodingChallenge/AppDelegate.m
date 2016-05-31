@@ -26,6 +26,7 @@
                                                            NSFontAttributeName: [UIFont systemFontOfSize:17 weight:UIFontWeightRegular]
                                                            }];
     
+    [self logWithMessage:@"Coredata"];
     return YES;
 }
 
@@ -131,6 +132,9 @@
     }
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    
+//    [_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+    
     return _managedObjectContext;
 }
 
@@ -147,6 +151,19 @@
             abort();
         }
     }
+}
+
+- (void)logWithMessage:(NSString *)message {
+    NSString *nowdate = [NSString stringWithFormat:@"%@-%@", message, [NSDate date]];
+    const char *saves=[nowdate UTF8String];
+    NSData *data = [[NSData alloc] initWithBytes:saves length:100];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *appFile = [documentsDirectory stringByAppendingPathComponent:nowdate];
+    [data writeToFile:appFile atomically:YES];
+    data = nil;
+    saves = nil;
+    NSLog(@"#### %@",documentsDirectory);
 }
 
 @end

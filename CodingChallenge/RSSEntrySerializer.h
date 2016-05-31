@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "RSSEntry.h"
 
+extern NSString *const kLWRSSEntryKey;
+extern NSString *const kLWContentTypeKey;
+
 @interface RSSEntrySerializer : NSObject
 
-+ (RSSEntry *)serializeRssEntryWithDictionary:(NSDictionary *)dictionary;
++ (void)serializeRssEntryWithDictionary:(NSDictionary *)dictionary mediaType:(NSString *) mediaType;
++ (NSManagedObjectContext *)managedObjectContext;
 
 @end

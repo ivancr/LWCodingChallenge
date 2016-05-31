@@ -1,22 +1,22 @@
 //
 //  RSSEntry.h
-//  LifeWalletCodingChallenge
+//  CodingChallenge
 //
-//  Created by Ivan Corchado Ruiz on 2/16/16.
-//  Copyright © 2016 dgtl. All rights reserved.
+//  Created by Iván Corchado Ruiz on 5/23/16.
+//  Copyright © 2016 Iván Corchado Ruiz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface RSSEntry : NSObject
+NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, copy) NSString    *name;
-@property (nonatomic, copy) NSString    *artist;
-@property (nonatomic, copy) NSString    *imageURL;
-@property (nonatomic, copy) NSString    *releaseDate;
-@property (nonatomic, copy) NSString    *contentType;
-@property (nonatomic, copy) NSString    *category;
-@property (nonatomic, copy) NSString    *price;
-@property (nonatomic, copy) UIImageView *image;
+@interface RSSEntry : NSManagedObject
+
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "RSSEntry+CoreDataProperties.h"

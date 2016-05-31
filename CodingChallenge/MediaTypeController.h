@@ -12,8 +12,8 @@
 
 @interface MediaTypeController : NSObject
 
-@property (nonatomic, strong) NSMutableArray *rssEntries;
+@property (nonatomic, strong) NSMutableArray    *rssEntries;
 
 - (void) fetchDataWithMediaType: (NSString *)mediaType completion:(void (^)(NSError *error))completionBlock;
-- (void) fetchOneRandomRSSEntryWithMediaType: (NSString *)mediaType completion:(void (^)(RSSEntry *, NSError *error))completionBlock;
+- (NSUInteger)countForRSSEntries:(NSString *)mediaType;
 @end

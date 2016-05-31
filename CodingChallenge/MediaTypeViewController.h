@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MediaTypeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface MediaTypeViewController : UIViewController
 
 @property (nonatomic, strong) NSString *mediaType;
 

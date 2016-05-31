@@ -8,31 +8,42 @@
 
 #import "UIImageView+AFNetworking.h"
 #import "MediaTypeController.h"
+#import "RSSEntrySerializer.h"
 #import "NetworkingAPI.h"
+#import "AppDelegate.h"
 #import "RSSEntry.h"
 
 @implementation MediaTypeController
 
 - (void) fetchDataWithMediaType:(NSString *)mediaType completion:(void (^)(NSError *error))completionBlock {
 
-    [NetworkingAPI fetchTopTenforMediaType:mediaType numberOfEntries:30 completionHandler:^(NSMutableArray *entriesArray, NSError *error) {
-        self.rssEntries = entriesArray;
-        
+    [NetworkingAPI fetchTopTenforMediaType:mediaType numberOfEntries:30 completionHandler:^(NSArray *entries, NSError *error) {
+        [entries enumerateObjectsUsingBlock:^(NSDictionary *entry, NSUInteger idx, BOOL *stop) {
+            [RSSEntrySerializer serializeRssEntryWithDictionary:entry mediaType: mediaType];
+        }];
         if (completionBlock) {
             completionBlock(error);
         }
     }];
 }
 
-- (void) fetchOneRandomRSSEntryWithMediaType: (NSString *)mediaType completion:(void (^)(RSSEntry *, NSError *error))completionBlock {
-    [NetworkingAPI fetchTopTenforMediaType:mediaType numberOfEntries:50 completionHandler:^(NSMutableArray *entriesArray, NSError *error) {
-        RSSEntry *randomEntry = [RSSEntry new];
-        randomEntry = [entriesArray objectAtIndex:arc4random_uniform(50)];
-        
-        if (completionBlock) {
-            completionBlock(randomEntry, error);
-        }
-    }];
+- (NSUInteger)countForRSSEntries:(NSString *)mediaType {
+    AppDelegate *appDelegate        = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = appDelegate.managedObjectContext;
+    NSFetchRequest *request         = [NSFetchRequest fetchRequestWithEntityName:kLWRSSEntryKey];
+    [request setPredicate:[self predicateWithMediaType:mediaType]];
+    
+    NSError *error;
+    NSUInteger count = [context countForFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"Error in MediaTypeController countForRSSEntries: %@",error);
+    }
+    return count;
+}
+
+- (NSPredicate *)predicateWithMediaType:(NSString *)mediaType {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"mediaType==%@", mediaType];
+    return pred;
 }
 
 @end

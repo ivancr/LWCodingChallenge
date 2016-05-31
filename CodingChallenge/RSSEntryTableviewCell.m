@@ -83,6 +83,12 @@
     [[self entryArtist] setFrame:entryArtistFrame];
 }
 
+- (void)willTransitionToState:(UITableViewCellStateMask)state {
+    if (state == UITableViewCellStateShowingEditControlMask && _isSelected) {
+        [self setIsSelected:NO];
+        [self setSelected:NO];
+    }
+}
 
 #pragma mark - Getters
 

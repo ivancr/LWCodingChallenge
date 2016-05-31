@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EBD9E3F1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBD9E3C1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m */; };
+		2EBD9E401CF3540C0016BBA2 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBD9E3E1CF3540C0016BBA2 /* RSSEntry.m */; };
 		2EBFD6BB1CEE68E000BE75BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6BA1CEE68E000BE75BA /* main.m */; };
 		2EBFD6BE1CEE68E000BE75BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6BD1CEE68E000BE75BA /* AppDelegate.m */; };
 		2EBFD6C71CEE68E000BE75BA /* CodingChallenge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6C51CEE68E000BE75BA /* CodingChallenge.xcdatamodeld */; };
@@ -54,10 +56,11 @@
 		2EBFD7751CEE6B3800BE75BA /* MainCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD76D1CEE6B3800BE75BA /* MainCollectionViewController.m */; };
 		2EBFD7761CEE6B3800BE75BA /* MediaTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD76F1CEE6B3800BE75BA /* MediaTypeViewController.m */; };
 		2EBFD7771CEE6B3800BE75BA /* RssEntryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7711CEE6B3800BE75BA /* RssEntryDetailViewController.m */; };
-		2EBFD7871CEE6BCA00BE75BA /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7821CEE6BCA00BE75BA /* RSSEntry.m */; };
 		2EBFD7881CEE6BCA00BE75BA /* RSSEntrySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7841CEE6BCA00BE75BA /* RSSEntrySerializer.m */; };
 		2EBFD7891CEE6BCA00BE75BA /* NetworkingAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7861CEE6BCA00BE75BA /* NetworkingAPI.m */; };
 		2EBFD78C1CEE6CCF00BE75BA /* NSString+LWAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD78B1CEE6CCF00BE75BA /* NSString+LWAdditions.m */; };
+		2EEBA9941CF50C87002D8E2F /* AddNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EEBA9931CF50C87002D8E2F /* AddNewViewController.m */; };
+		2EEBA9A91CF7528D002D8E2F /* NewEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EEBA9A81CF7528D002D8E2F /* NewEntryTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,10 @@
 
 /* Begin PBXFileReference section */
 		2E9D706C1CEE700E00174EAB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2EBD9E3B1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSSEntry+CoreDataProperties.h"; sourceTree = "<group>"; };
+		2EBD9E3C1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSSEntry+CoreDataProperties.m"; sourceTree = "<group>"; };
+		2EBD9E3D1CF3540C0016BBA2 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntry.h; sourceTree = "<group>"; };
+		2EBD9E3E1CF3540C0016BBA2 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntry.m; sourceTree = "<group>"; };
 		2EBFD6B61CEE68E000BE75BA /* CodingChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EBFD6BA1CEE68E000BE75BA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2EBFD6BC1CEE68E000BE75BA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -178,14 +185,17 @@
 		2EBFD76F1CEE6B3800BE75BA /* MediaTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTypeViewController.m; sourceTree = "<group>"; };
 		2EBFD7701CEE6B3800BE75BA /* RssEntryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RssEntryDetailViewController.h; sourceTree = "<group>"; };
 		2EBFD7711CEE6B3800BE75BA /* RssEntryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RssEntryDetailViewController.m; sourceTree = "<group>"; };
-		2EBFD7811CEE6BCA00BE75BA /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntry.h; sourceTree = "<group>"; };
-		2EBFD7821CEE6BCA00BE75BA /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntry.m; sourceTree = "<group>"; };
 		2EBFD7831CEE6BCA00BE75BA /* RSSEntrySerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntrySerializer.h; sourceTree = "<group>"; };
 		2EBFD7841CEE6BCA00BE75BA /* RSSEntrySerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntrySerializer.m; sourceTree = "<group>"; };
 		2EBFD7851CEE6BCA00BE75BA /* NetworkingAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingAPI.h; sourceTree = "<group>"; };
 		2EBFD7861CEE6BCA00BE75BA /* NetworkingAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingAPI.m; sourceTree = "<group>"; };
 		2EBFD78A1CEE6CCF00BE75BA /* NSString+LWAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LWAdditions.h"; sourceTree = "<group>"; };
 		2EBFD78B1CEE6CCF00BE75BA /* NSString+LWAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LWAdditions.m"; sourceTree = "<group>"; };
+		2EEBA9921CF50C87002D8E2F /* AddNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewViewController.h; sourceTree = "<group>"; };
+		2EEBA9931CF50C87002D8E2F /* AddNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewViewController.m; sourceTree = "<group>"; };
+		2EEBA9991CF6022C002D8E2F /* AddNewEntryDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewEntryDelegate.h; sourceTree = "<group>"; };
+		2EEBA9A71CF7528D002D8E2F /* NewEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEntryTableViewCell.h; sourceTree = "<group>"; };
+		2EEBA9A81CF7528D002D8E2F /* NewEntryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewEntryTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,8 +249,10 @@
 				2EBFD6BC1CEE68E000BE75BA /* AppDelegate.h */,
 				2EBFD6BD1CEE68E000BE75BA /* AppDelegate.m */,
 				2EBFD75A1CEE6B0000BE75BA /* Model */,
-				2EBFD75B1CEE6B0A00BE75BA /* Controllers */,
-				2EBFD7591CEE6AF900BE75BA /* Views */,
+				2EEBA99A1CF60269002D8E2F /* Initial Collection View */,
+				2EEBA99B1CF6027C002D8E2F /* RSS Entries TableView */,
+				2EEBA99C1CF6028F002D8E2F /* Add New Entry */,
+				2EBFD75B1CEE6B0A00BE75BA /* RSS Entry Detail */,
 				2EBFD6C81CEE68E000BE75BA /* Assets.xcassets */,
 				2EBFD6B91CEE68E000BE75BA /* Supporting Files */,
 			);
@@ -369,22 +381,23 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		2EBFD7591CEE6AF900BE75BA /* Views */ = {
+		2EBFD7591CEE6AF900BE75BA /* View */ = {
 			isa = PBXGroup;
 			children = (
 				2EBFD75C1CEE6B1900BE75BA /* RssEntryDetailView.h */,
 				2EBFD75D1CEE6B1900BE75BA /* RssEntryDetailView.m */,
-				2EBFD7651CEE6B2900BE75BA /* Cells */,
 			);
-			name = Views;
+			name = View;
 			sourceTree = "<group>";
 		};
 		2EBFD75A1CEE6B0000BE75BA /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				2EBFD6C51CEE68E000BE75BA /* CodingChallenge.xcdatamodeld */,
-				2EBFD7811CEE6BCA00BE75BA /* RSSEntry.h */,
-				2EBFD7821CEE6BCA00BE75BA /* RSSEntry.m */,
+				2EBD9E3B1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.h */,
+				2EBD9E3C1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m */,
+				2EBD9E3D1CF3540C0016BBA2 /* RSSEntry.h */,
+				2EBD9E3E1CF3540C0016BBA2 /* RSSEntry.m */,
 				2EBFD7831CEE6BCA00BE75BA /* RSSEntrySerializer.h */,
 				2EBFD7841CEE6BCA00BE75BA /* RSSEntrySerializer.m */,
 				2EBFD7851CEE6BCA00BE75BA /* NetworkingAPI.h */,
@@ -393,23 +406,16 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		2EBFD75B1CEE6B0A00BE75BA /* Controllers */ = {
+		2EBFD75B1CEE6B0A00BE75BA /* RSS Entry Detail */ = {
 			isa = PBXGroup;
 			children = (
-				2EBFD7661CEE6B3800BE75BA /* MainController.h */,
-				2EBFD7671CEE6B3800BE75BA /* MainController.m */,
-				2EBFD7681CEE6B3800BE75BA /* MediaTypeController.h */,
-				2EBFD7691CEE6B3800BE75BA /* MediaTypeController.m */,
+				2EBFD7591CEE6AF900BE75BA /* View */,
 				2EBFD76A1CEE6B3800BE75BA /* RssEntryDetailController.h */,
 				2EBFD76B1CEE6B3800BE75BA /* RssEntryDetailController.m */,
-				2EBFD76C1CEE6B3800BE75BA /* MainCollectionViewController.h */,
-				2EBFD76D1CEE6B3800BE75BA /* MainCollectionViewController.m */,
-				2EBFD76E1CEE6B3800BE75BA /* MediaTypeViewController.h */,
-				2EBFD76F1CEE6B3800BE75BA /* MediaTypeViewController.m */,
 				2EBFD7701CEE6B3800BE75BA /* RssEntryDetailViewController.h */,
 				2EBFD7711CEE6B3800BE75BA /* RssEntryDetailViewController.m */,
 			);
-			name = Controllers;
+			name = "RSS Entry Detail";
 			sourceTree = "<group>";
 		};
 		2EBFD7651CEE6B2900BE75BA /* Cells */ = {
@@ -417,10 +423,61 @@
 			children = (
 				2EBFD75F1CEE6B2300BE75BA /* RSSEntryTableviewCell.h */,
 				2EBFD7601CEE6B2300BE75BA /* RSSEntryTableviewCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		2EEBA99A1CF60269002D8E2F /* Initial Collection View */ = {
+			isa = PBXGroup;
+			children = (
+				2EEBA99D1CF6034B002D8E2F /* Cell */,
+				2EBFD7661CEE6B3800BE75BA /* MainController.h */,
+				2EBFD7671CEE6B3800BE75BA /* MainController.m */,
+				2EBFD76C1CEE6B3800BE75BA /* MainCollectionViewController.h */,
+				2EBFD76D1CEE6B3800BE75BA /* MainCollectionViewController.m */,
+			);
+			name = "Initial Collection View";
+			sourceTree = "<group>";
+		};
+		2EEBA99B1CF6027C002D8E2F /* RSS Entries TableView */ = {
+			isa = PBXGroup;
+			children = (
+				2EBFD7651CEE6B2900BE75BA /* Cells */,
+				2EBFD7681CEE6B3800BE75BA /* MediaTypeController.h */,
+				2EBFD7691CEE6B3800BE75BA /* MediaTypeController.m */,
+				2EBFD76E1CEE6B3800BE75BA /* MediaTypeViewController.h */,
+				2EBFD76F1CEE6B3800BE75BA /* MediaTypeViewController.m */,
+			);
+			name = "RSS Entries TableView";
+			sourceTree = "<group>";
+		};
+		2EEBA99C1CF6028F002D8E2F /* Add New Entry */ = {
+			isa = PBXGroup;
+			children = (
+				2EEBA99E1CF60372002D8E2F /* View */,
+				2EEBA9921CF50C87002D8E2F /* AddNewViewController.h */,
+				2EEBA9931CF50C87002D8E2F /* AddNewViewController.m */,
+				2EEBA9991CF6022C002D8E2F /* AddNewEntryDelegate.h */,
+			);
+			name = "Add New Entry";
+			sourceTree = "<group>";
+		};
+		2EEBA99D1CF6034B002D8E2F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
 				2EBFD7611CEE6B2300BE75BA /* MediaTypeCollectionCell.h */,
 				2EBFD7621CEE6B2300BE75BA /* MediaTypeCollectionCell.m */,
 			);
-			name = Cells;
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		2EEBA99E1CF60372002D8E2F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2EEBA9A71CF7528D002D8E2F /* NewEntryTableViewCell.h */,
+				2EEBA9A81CF7528D002D8E2F /* NewEntryTableViewCell.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -563,11 +620,11 @@
 				2EBFD7631CEE6B2300BE75BA /* RSSEntryTableviewCell.m in Sources */,
 				2EBFD7641CEE6B2300BE75BA /* MediaTypeCollectionCell.m in Sources */,
 				2EBFD7361CEE69F600BE75BA /* UIImage+MultiFormat.m in Sources */,
+				2EEBA9941CF50C87002D8E2F /* AddNewViewController.m in Sources */,
 				2EBFD7761CEE6B3800BE75BA /* MediaTypeViewController.m in Sources */,
 				2EBFD73D1CEE69F600BE75BA /* AFImageDownloader.m in Sources */,
 				2EBFD75E1CEE6B1900BE75BA /* RssEntryDetailView.m in Sources */,
 				2EBFD7311CEE69F600BE75BA /* SDWebImageDownloaderOperation.m in Sources */,
-				2EBFD7871CEE6BCA00BE75BA /* RSSEntry.m in Sources */,
 				2EBFD7581CEE6A2100BE75BA /* AFURLSessionManager.m in Sources */,
 				2EBFD7531CEE6A2100BE75BA /* AFHTTPSessionManager.m in Sources */,
 				2EBFD72E1CEE69F600BE75BA /* SDWebImageCompat.m in Sources */,
@@ -585,12 +642,14 @@
 				2EBFD73A1CEE69F600BE75BA /* UIView+WebCacheOperation.m in Sources */,
 				2EBFD7411CEE69F600BE75BA /* UIImageView+AFNetworking.m in Sources */,
 				2EBFD7891CEE6BCA00BE75BA /* NetworkingAPI.m in Sources */,
+				2EBD9E401CF3540C0016BBA2 /* RSSEntry.m in Sources */,
 				2EBFD7341CEE69F600BE75BA /* UIButton+WebCache.m in Sources */,
 				2EBFD7541CEE6A2100BE75BA /* AFNetworkReachabilityManager.m in Sources */,
 				2EBFD7721CEE6B3800BE75BA /* MainController.m in Sources */,
 				2EBFD72B1CEE69F600BE75BA /* MKAnnotationView+WebCache.m in Sources */,
 				2EBFD72C1CEE69F600BE75BA /* NSData+ImageContentType.m in Sources */,
 				2EBFD6C71CEE68E000BE75BA /* CodingChallenge.xcdatamodeld in Sources */,
+				2EEBA9A91CF7528D002D8E2F /* NewEntryTableViewCell.m in Sources */,
 				2EBFD7321CEE69F600BE75BA /* SDWebImageManager.m in Sources */,
 				2EBFD73E1CEE69F600BE75BA /* AFNetworkActivityIndicatorManager.m in Sources */,
 				2EBFD72F1CEE69F600BE75BA /* SDWebImageDecoder.m in Sources */,
@@ -598,6 +657,7 @@
 				2EBFD72D1CEE69F600BE75BA /* SDImageCache.m in Sources */,
 				2EBFD7401CEE69F600BE75BA /* UIButton+AFNetworking.m in Sources */,
 				2EBFD7551CEE6A2100BE75BA /* AFSecurityPolicy.m in Sources */,
+				2EBD9E3F1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m in Sources */,
 				2EBFD73C1CEE69F600BE75BA /* AFAutoPurgingImageCache.m in Sources */,
 				2EBFD7731CEE6B3800BE75BA /* MediaTypeController.m in Sources */,
 			);

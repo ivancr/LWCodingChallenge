@@ -1,13 +1,15 @@
 //
 //  RSSEntry.m
-//  LifeWalletCodingChallenge
+//  CodingChallenge
 //
-//  Created by Ivan Corchado Ruiz on 2/16/16.
-//  Copyright © 2016 dgtl. All rights reserved.
+//  Created by Iván Corchado Ruiz on 5/23/16.
+//  Copyright © 2016 Iván Corchado Ruiz. All rights reserved.
 //
 
 #import "RSSEntry.h"
 
 @implementation RSSEntry
+
+// Insert code here to add functionality to your managed object subclass
 
 @end

@@ -8,50 +8,108 @@
 
 #import "NSString+LWAdditions.h"
 #import "RSSEntrySerializer.h"
+#import "AppDelegate.h"
+
+NSString *const kLWNameKey          = @"name";
+NSString *const kLWArtistKey        = @"artist";
+NSString *const kLWImageURLKey      = @"imageURL";
+NSString *const kLWReleaseDateKey   = @"releaseDate";
+NSString *const kLWContentTypeKey   = @"contentType";
+NSString *const kLWCategoryKey      = @"category";
+NSString *const kLWPriceKey         = @"price";
+NSString *const kLWRSSIdKey         = @"rssId";
+
+NSString *const kLWRSSEntryKey      = @"RSSEntry";
 
 @implementation RSSEntrySerializer
 
-+ (RSSEntry *)serializeRssEntryWithDictionary:(NSDictionary *)dictionary {
-    
-    RSSEntry *rssEntry = [[RSSEntry alloc] init];
++ (void)serializeRssEntryWithDictionary:(NSDictionary *)dictionary mediaType:(NSString *) mediaType {
+    NSManagedObjectContext *context = [self managedObjectContext];
     
     // Temp dictionaries to drill down levels in the JSON dictionary
     NSDictionary *levelOneDictionary;
     NSDictionary *levelTwoDictionary;
     NSArray *imageArray;
+    NSString *tempString;
     
-    levelOneDictionary = [NSString valueOrNilForKey:@"im:name" fromContainer:dictionary];
-    rssEntry.name = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:kLWRSSEntryKey];
     
-    levelOneDictionary = [NSString valueOrNilForKey:@"im:artist" fromContainer:dictionary];
-    rssEntry.artist = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
-    
-    imageArray = [NSString valueOrNilForKey:@"im:image" fromContainer:dictionary];
-    levelOneDictionary = [imageArray lastObject];
-    rssEntry.imageURL = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
-    
-    levelOneDictionary = [NSString valueOrNilForKey:@"im:releaseDate" fromContainer:dictionary];
-    levelTwoDictionary = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
-    rssEntry.releaseDate = [NSString valueOrNilForKey:@"label" fromContainer:levelTwoDictionary];
-    
-    levelOneDictionary = [NSString valueOrNilForKey:@"im:contentType" fromContainer:dictionary];
-    levelTwoDictionary = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
-    rssEntry.contentType = [NSString valueOrNilForKey:@"label" fromContainer:levelTwoDictionary];
-    if ([rssEntry.contentType isEqualToString:@"MZRssItemTypeIdentifier.Book"]) {
-        rssEntry.contentType = @"Book";
+    levelOneDictionary  = [NSString valueOrNilForKey:@"id" fromContainer:dictionary];
+    levelTwoDictionary  = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
+    tempString          = [NSString valueOrNilForKey:@"im:id" fromContainer:levelTwoDictionary];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"rssId==%@",tempString];
+    [request setPredicate:pred];
+    NSError *error;
+    RSSEntry *rssEntry = [[context executeFetchRequest:request error:&error] firstObject];
+    if (!rssEntry) {
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:kLWRSSEntryKey inManagedObjectContext:context];
+        rssEntry = [[RSSEntry alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:context];
     }
     
-    levelOneDictionary = [NSString valueOrNilForKey:@"category" fromContainer:dictionary];
-    levelTwoDictionary = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
-    rssEntry.category = [NSString valueOrNilForKey:@"label" fromContainer:levelTwoDictionary];
     
-    levelOneDictionary = [NSString valueOrNilForKey:@"im:price" fromContainer:dictionary];
-    rssEntry.price = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
-    if ([rssEntry.price isEqualToString:@"Get"]) {
-        rssEntry.price = @"Free";
+    [rssEntry setValue:mediaType forKey:@"mediaType"];
+    
+    levelOneDictionary  = [NSString valueOrNilForKey:@"im:name" fromContainer:dictionary];
+    tempString          = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
+    [rssEntry setValue:tempString forKey:kLWNameKey];
+    
+    levelOneDictionary  = [NSString valueOrNilForKey:@"im:artist" fromContainer:dictionary];
+    tempString          = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
+    [rssEntry setValue:tempString forKey:kLWArtistKey];
+    
+    imageArray          = [NSString valueOrNilForKey:@"im:image" fromContainer:dictionary];
+    levelOneDictionary  = [imageArray lastObject];
+    tempString          = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
+    [rssEntry setValue:tempString forKey:kLWImageURLKey];
+    
+    levelOneDictionary  = [NSString valueOrNilForKey:@"im:releaseDate" fromContainer:dictionary];
+    levelTwoDictionary  = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
+    tempString          = [NSString valueOrNilForKey:@"label" fromContainer:levelTwoDictionary];
+    [rssEntry setValue:tempString forKey:kLWReleaseDateKey];
+    
+    levelOneDictionary  = [NSString valueOrNilForKey:@"id" fromContainer:dictionary];
+    levelTwoDictionary  = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
+    tempString          = [NSString valueOrNilForKey:@"im:id" fromContainer:levelTwoDictionary];
+    [rssEntry setValue:tempString forKey:kLWRSSIdKey];
+    
+    levelOneDictionary  = [NSString valueOrNilForKey:@"im:contentType" fromContainer:dictionary];
+    levelTwoDictionary  = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
+    tempString          = [NSString valueOrNilForKey:@"label" fromContainer:levelTwoDictionary];
+    
+    if ([tempString isEqualToString:@"MZRssItemTypeIdentifier.Book"]) {
+        [rssEntry setValue:@"Book" forKey:@"contentType"];
+    } else {
+        [rssEntry setValue:tempString forKey:kLWContentTypeKey];
     }
     
-    return rssEntry;
+    levelOneDictionary  = [NSString valueOrNilForKey:@"category" fromContainer:dictionary];
+    levelTwoDictionary  = [NSString valueOrNilForKey:@"attributes" fromContainer:levelOneDictionary];
+    tempString          = [NSString valueOrNilForKey:@"label" fromContainer:levelTwoDictionary];
+    [rssEntry setValue:tempString forKey:kLWCategoryKey];
+    
+    
+    levelOneDictionary  = [NSString valueOrNilForKey:@"im:price" fromContainer:dictionary];
+    tempString          = [NSString valueOrNilForKey:@"label" fromContainer:levelOneDictionary];
+    
+    if ([tempString isEqualToString:@"Get"]) {
+        [rssEntry setValue:@"Free" forKey:@"price"];
+    } else {
+        [rssEntry setValue:tempString forKey:kLWPriceKey];
+    }
+    
+    if ([rssEntry hasPersistentChangedValues]) {
+        NSError *error;
+        [context save:&error];
+        if (error) {
+            NSLog(@"Error in MediaTypeController fetchDataWithMediaType: %@",error);
+        }
+    }
+}
+
++ (NSManagedObjectContext *)managedObjectContext {
+    AppDelegate *appDelegate        = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = appDelegate.managedObjectContext;
+    return context;
 }
 
 @end

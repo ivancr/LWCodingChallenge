@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong, readonly) NSString *numberOfEntries;
 
-- (void) setNumberOfEntries:(NSString *)numberOfEntries;
-+ (void) fetchTopTenforMediaType:(NSString *)mediaType numberOfEntries:(NSInteger)numberOfEntries completionHandler:(void (^)(NSMutableArray *, NSError *))completionBlock;
++ (void) fetchTopTenforMediaType:(NSString *)mediaType numberOfEntries:(NSInteger)numberOfEntries completionHandler:(void (^)(NSArray *, NSError *))completionBlock;
 
 @end
