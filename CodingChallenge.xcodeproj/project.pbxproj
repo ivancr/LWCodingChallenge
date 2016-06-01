@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2EBD9E3F1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBD9E3C1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m */; };
-		2EBD9E401CF3540C0016BBA2 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBD9E3E1CF3540C0016BBA2 /* RSSEntry.m */; };
 		2EBFD6BB1CEE68E000BE75BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6BA1CEE68E000BE75BA /* main.m */; };
 		2EBFD6BE1CEE68E000BE75BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6BD1CEE68E000BE75BA /* AppDelegate.m */; };
 		2EBFD6C71CEE68E000BE75BA /* CodingChallenge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6C51CEE68E000BE75BA /* CodingChallenge.xcdatamodeld */; };
@@ -61,6 +59,8 @@
 		2EBFD78C1CEE6CCF00BE75BA /* NSString+LWAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD78B1CEE6CCF00BE75BA /* NSString+LWAdditions.m */; };
 		2EEBA9941CF50C87002D8E2F /* AddNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EEBA9931CF50C87002D8E2F /* AddNewViewController.m */; };
 		2EEBA9A91CF7528D002D8E2F /* NewEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EEBA9A81CF7528D002D8E2F /* NewEntryTableViewCell.m */; };
+		2EEBA9AE1CFE3005002D8E2F /* RSSEntry+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EEBA9AB1CFE3005002D8E2F /* RSSEntry+CoreDataProperties.m */; };
+		2EEBA9AF1CFE3005002D8E2F /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EEBA9AD1CFE3005002D8E2F /* RSSEntry.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,10 +82,6 @@
 
 /* Begin PBXFileReference section */
 		2E9D706C1CEE700E00174EAB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2EBD9E3B1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSSEntry+CoreDataProperties.h"; sourceTree = "<group>"; };
-		2EBD9E3C1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSSEntry+CoreDataProperties.m"; sourceTree = "<group>"; };
-		2EBD9E3D1CF3540C0016BBA2 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntry.h; sourceTree = "<group>"; };
-		2EBD9E3E1CF3540C0016BBA2 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntry.m; sourceTree = "<group>"; };
 		2EBFD6B61CEE68E000BE75BA /* CodingChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EBFD6BA1CEE68E000BE75BA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2EBFD6BC1CEE68E000BE75BA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -196,6 +192,10 @@
 		2EEBA9991CF6022C002D8E2F /* AddNewEntryDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewEntryDelegate.h; sourceTree = "<group>"; };
 		2EEBA9A71CF7528D002D8E2F /* NewEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEntryTableViewCell.h; sourceTree = "<group>"; };
 		2EEBA9A81CF7528D002D8E2F /* NewEntryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewEntryTableViewCell.m; sourceTree = "<group>"; };
+		2EEBA9AA1CFE3005002D8E2F /* RSSEntry+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSSEntry+CoreDataProperties.h"; sourceTree = "<group>"; };
+		2EEBA9AB1CFE3005002D8E2F /* RSSEntry+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSSEntry+CoreDataProperties.m"; sourceTree = "<group>"; };
+		2EEBA9AC1CFE3005002D8E2F /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntry.h; sourceTree = "<group>"; };
+		2EEBA9AD1CFE3005002D8E2F /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntry.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -394,10 +394,10 @@
 			isa = PBXGroup;
 			children = (
 				2EBFD6C51CEE68E000BE75BA /* CodingChallenge.xcdatamodeld */,
-				2EBD9E3B1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.h */,
-				2EBD9E3C1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m */,
-				2EBD9E3D1CF3540C0016BBA2 /* RSSEntry.h */,
-				2EBD9E3E1CF3540C0016BBA2 /* RSSEntry.m */,
+				2EEBA9AA1CFE3005002D8E2F /* RSSEntry+CoreDataProperties.h */,
+				2EEBA9AB1CFE3005002D8E2F /* RSSEntry+CoreDataProperties.m */,
+				2EEBA9AC1CFE3005002D8E2F /* RSSEntry.h */,
+				2EEBA9AD1CFE3005002D8E2F /* RSSEntry.m */,
 				2EBFD7831CEE6BCA00BE75BA /* RSSEntrySerializer.h */,
 				2EBFD7841CEE6BCA00BE75BA /* RSSEntrySerializer.m */,
 				2EBFD7851CEE6BCA00BE75BA /* NetworkingAPI.h */,
@@ -610,6 +610,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBFD7421CEE69F600BE75BA /* UIProgressView+AFNetworking.m in Sources */,
+				2EEBA9AE1CFE3005002D8E2F /* RSSEntry+CoreDataProperties.m in Sources */,
 				2EBFD7751CEE6B3800BE75BA /* MainCollectionViewController.m in Sources */,
 				2EBFD7431CEE69F600BE75BA /* UIRefreshControl+AFNetworking.m in Sources */,
 				2EBFD7881CEE6BCA00BE75BA /* RSSEntrySerializer.m in Sources */,
@@ -642,7 +643,6 @@
 				2EBFD73A1CEE69F600BE75BA /* UIView+WebCacheOperation.m in Sources */,
 				2EBFD7411CEE69F600BE75BA /* UIImageView+AFNetworking.m in Sources */,
 				2EBFD7891CEE6BCA00BE75BA /* NetworkingAPI.m in Sources */,
-				2EBD9E401CF3540C0016BBA2 /* RSSEntry.m in Sources */,
 				2EBFD7341CEE69F600BE75BA /* UIButton+WebCache.m in Sources */,
 				2EBFD7541CEE6A2100BE75BA /* AFNetworkReachabilityManager.m in Sources */,
 				2EBFD7721CEE6B3800BE75BA /* MainController.m in Sources */,
@@ -656,8 +656,8 @@
 				2EBFD7561CEE6A2100BE75BA /* AFURLRequestSerialization.m in Sources */,
 				2EBFD72D1CEE69F600BE75BA /* SDImageCache.m in Sources */,
 				2EBFD7401CEE69F600BE75BA /* UIButton+AFNetworking.m in Sources */,
+				2EEBA9AF1CFE3005002D8E2F /* RSSEntry.m in Sources */,
 				2EBFD7551CEE6A2100BE75BA /* AFSecurityPolicy.m in Sources */,
-				2EBD9E3F1CF3540C0016BBA2 /* RSSEntry+CoreDataProperties.m in Sources */,
 				2EBFD73C1CEE69F600BE75BA /* AFAutoPurgingImageCache.m in Sources */,
 				2EBFD7731CEE6B3800BE75BA /* MediaTypeController.m in Sources */,
 			);
