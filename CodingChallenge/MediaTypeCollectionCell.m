@@ -39,16 +39,16 @@
     
     CGRect imageFrame       = [[self imageView] frame];
     imageFrame.origin       = CGPointMake(kPadding8px, kPadding8px);
-    imageFrame.size.width   = CGRectGetWidth([self frame]) - kPadding16px;
+    imageFrame.size.width   = CGRectGetWidth([self bounds]) - kPadding16px;
     imageFrame.size.height  = 100;
     [[self imageView] setFrame:imageFrame];
     
     
     CGRect labelFrame       = [[self titleLabel] frame];
     labelFrame.origin.x     = kPadding8px;
-    labelFrame.origin.y     = CGRectGetMaxY([[self imageView] frame]) - kPadding8px;
-    labelFrame.size.width   = CGRectGetWidth([self frame]) - kPadding16px;
-    labelFrame.size.height  = labelHeight.size.height;//CGRectGetHeight([[self titleLabel] frame]);
+    labelFrame.origin.y     = CGRectGetMaxY([[self imageView] bounds]);
+    labelFrame.size.width   = CGRectGetWidth([self bounds]) - kPadding16px;
+    labelFrame.size.height  = labelHeight.size.height;
     [[self titleLabel] setFrame:labelFrame];
 }
 
@@ -84,6 +84,11 @@
     NSString *key = [controller.mediaTypes objectAtIndex:indexPath.row];
     [[self titleLabel] setText:[controller.mediaTypesTitles objectForKey:key]];
     [[self imageView] setImage:[UIImage imageNamed:key]];
+}
+
+- (void) prepareForReuse {
+    [[self titleLabel] setText:nil];
+    [[self imageView] setImage:nil];
 }
 
 @end

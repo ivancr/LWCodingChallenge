@@ -41,7 +41,7 @@
     }
     
     if (_isSelected) {
-        wrapperFrame.size.height    = CGRectGetHeight([[self entryName] frame]) + CGRectGetHeight([[self entryArtist] frame]) + kPadding8px ;
+        wrapperFrame.size.height    = CGRectGetHeight([[self entryName] bounds]) + CGRectGetHeight([[self entryArtist] bounds]) + kPadding8px ;
         wrapperFrame.size.width     = [self frame].size.width - kPadding16px - paddingForEditingMode;
         wrapperFrame.origin.x       = paddingForEditingMode + kPadding8px;
         wrapperFrame.origin.y       = kPadding8px;
@@ -59,8 +59,8 @@
         entryImageFrame.origin.y    = 0;
         [[self entryImageView] setFrame:entryImageFrame];
         
-        wrapperFrame.size.height    = CGRectGetHeight([[self entryName] frame]) + CGRectGetHeight([[self entryArtist] frame]) + kPadding8px ;
-        wrapperFrame.size.width     = [self frame].size.width - [[self entryImageView] frame].size.width - kPadding16px  - paddingForEditingMode;
+        wrapperFrame.size.height    = CGRectGetHeight([[self entryName] bounds]) + CGRectGetHeight([[self entryArtist] bounds]) + kPadding8px ;
+        wrapperFrame.size.width     = [self frame].size.width - [[self entryImageView] bounds].size.width - kPadding16px  - paddingForEditingMode;
         wrapperFrame.origin.x       = CGRectGetMaxX([[self entryImageView] frame]) + kPadding8px;
         wrapperFrame.origin.y       = [self verticallyCenteredFrameForChildFrame:wrapperFrame].origin.y;
         [[self wrapperLabelsView] setFrame:wrapperFrame];
@@ -72,7 +72,7 @@
     [[self entryName] setFrame:entryNameFrame];
     
     CGRect entryPriceFrame         = [[self price] frame];
-    entryPriceFrame.origin.x       = CGRectGetWidth([[self wrapperLabelsView] frame]) - entryPriceFrame.size.width - kPadding8px;
+    entryPriceFrame.origin.x       = CGRectGetWidth([[self wrapperLabelsView] bounds]) - entryPriceFrame.size.width - kPadding8px;
     entryPriceFrame.origin.y       = CGRectGetMaxY([[self entryName] frame]) + kPadding8px;
     [[self price] setFrame:entryPriceFrame];
     

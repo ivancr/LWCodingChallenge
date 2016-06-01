@@ -39,13 +39,7 @@ static NSString *reuseIdentifier = @"mediaTypeCell";
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
-    CGRect collectionFrame      = [[self mediaTypesCollectionView] frame];
-    collectionFrame.origin      = CGPointZero;
-    collectionFrame.size.height = CGRectGetHeight([[self view] frame]);
-    collectionFrame.size.width  = CGRectGetWidth([[self view] frame]);
-    [[self mediaTypesCollectionView] setFrame:collectionFrame];
-    
-    [[[self mediaTypesCollectionView] collectionViewLayout] invalidateLayout];
+    [[self mediaTypesCollectionView] setFrame:[[self view] frame]];
 }
 
 #pragma mark - Views
@@ -73,6 +67,7 @@ static NSString *reuseIdentifier = @"mediaTypeCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     MediaTypeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     [cell setMediaTypeWithController:[self controller] indexPath:indexPath];
     return cell;
@@ -105,6 +100,10 @@ static NSString *reuseIdentifier = @"mediaTypeCell";
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsZero;
+}
+
+-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [[[self mediaTypesCollectionView] collectionViewLayout] invalidateLayout];
 }
 
 #pragma mark - Selectors

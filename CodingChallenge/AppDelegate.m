@@ -123,6 +123,7 @@
 - (NSManagedObjectContext *)managedObjectContext {
     // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
     if (_managedObjectContext != nil) {
+        //    [_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
         return _managedObjectContext;
     }
     
@@ -133,7 +134,7 @@
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     
-//    [_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+
     
     return _managedObjectContext;
 }

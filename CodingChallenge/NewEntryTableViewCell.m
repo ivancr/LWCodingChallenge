@@ -44,17 +44,17 @@
     [super layoutSubviews];
     
     CGRect textFieldFrame       = [[self textField] frame];
-    textFieldFrame.size.width   = CGRectGetWidth([self frame]) - (kPadding * 2);
+    textFieldFrame.size.width   = CGRectGetWidth([self bounds]) - (kPadding * 2);
     textFieldFrame.size.height  = kFieldHeight;
     textFieldFrame.origin.x     = kPadding;
     textFieldFrame.origin.y     = kPadding * 2;
     [[self textField] setFrame:textFieldFrame];
     
     CGRect labelFrame           = [[self label] frame];
-    labelFrame.size.width       = CGRectGetWidth([[self label] frame]);
+    labelFrame.size.width       = CGRectGetWidth([[self label] bounds]);
     labelFrame.size.height      = kLabelHeight;
     if (!_textFieldIsEmpty || [[self textField] isEditing]) {
-        labelFrame.origin.x     = CGRectGetMaxX([[self textField] frame]) - CGRectGetWidth([[self label] frame]);
+        labelFrame.origin.x     = CGRectGetMaxX([[self textField] frame]) - CGRectGetWidth([[self label] bounds]);
     } else {
         labelFrame.origin.x     = kPadding;
     }
@@ -62,7 +62,7 @@
     [[self label] setFrame:labelFrame];
     
     CGRect fieldLineFrame       = [[self fieldLine] frame];
-    fieldLineFrame.size.width   = CGRectGetWidth([[self textField] frame]);
+    fieldLineFrame.size.width   = CGRectGetWidth([[self textField] bounds]);
     fieldLineFrame.size.height  = 1.0f;
     fieldLineFrame.origin.x     = kPadding;
     fieldLineFrame.origin.y     = CGRectGetMaxY([[self textField] frame]) - 1;
