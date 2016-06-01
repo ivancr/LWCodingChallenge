@@ -11,6 +11,6 @@
 
 @protocol AddNewEntryDelegate <NSObject>
 
-- (void)cellTextDidChange:(id) cell;
+- (void)cellTextDidChange:(NSString *) string configuration:(NSUInteger) configuration;
 
 @end

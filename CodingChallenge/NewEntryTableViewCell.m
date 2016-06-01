@@ -7,10 +7,12 @@
 //
 
 #import "NewEntryTableViewCell.h"
+#import "RSSEntrySerializer.h"
 #import "UIColor+LWColors.h"
+#import "RSSEntry.h"
 
 #define kImagePlaceholderString (@"placeholder")
-#define kLabelHeight            (16)
+#define kLabelHeight            (32)
 #define kFieldHeight            (32)
 #define kPadding                (16)
 
@@ -24,7 +26,6 @@
 @property (nonatomic, strong) UILabel       *label;
 @property (nonatomic, strong) UIView        *fieldLine;
 @property (nonatomic, assign) BOOL          textFieldIsEmpty;
-@property (nonatomic, strong) UIDynamicAnimator *animator;
 
 @end
 
@@ -86,6 +87,7 @@
                 break;
             default:
                 [[self label] setText:kLocStringUnknown];
+                break;
         }
         [[self label] setFont:[UIFont detailHeaderFont]];
         [[self label] sizeToFit];
@@ -99,6 +101,17 @@
     if (!_textField){
         _textField = [[UITextField alloc] initWithFrame:CGRectZero];
         [[self textField] setDelegate:self];
+        
+        switch (_cellConfiguration) {
+            case kPrice:
+                [[self textField] setKeyboardType:UIKeyboardTypeDecimalPad];
+                break;
+            default:
+                [[self textField] setKeyboardType:UIKeyboardTypeDefault];
+                [[self textField] setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+                break;
+        }
+        
         [self addSubview:_textField];
         return _textField;
     }
@@ -121,9 +134,9 @@
     _cellConfiguration = cellConfiguration;
 }
 
-- (void)cellTextDidChange:(NewEntryTableViewCell *) cell {
-    if ([[self delegate] respondsToSelector:@selector(cellTextDidChange:)]) {
-        [[self delegate] cellTextDidChange:cell];
+- (void)cellTextDidChange:(NSString *) string configuration:(NSUInteger) configuration {
+    if ([[self delegate] respondsToSelector:@selector(cellTextDidChange: configuration:)]) {
+        [[self delegate] cellTextDidChange:string configuration:self.cellConfiguration];
     }
 }
 
@@ -132,23 +145,27 @@
     CGRect labelFrame   = [[self label] frame];
     labelFrame.origin.x = CGRectGetMaxX([[self textField] frame]) - CGRectGetWidth([[self label] frame]);
     
-    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.4 initialSpringVelocity:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.2 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [[self label] setFrame:labelFrame];
         [[self label] setTextColor:[UIColor themeTintColor]];
     } completion:nil];
+    
+    if (_cellConfiguration == kPrice && _textFieldIsEmpty) {
+        textField.text = @"$";
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    [self cellTextDidChange:self];
-    
-    if ([[[self textField] text] isEqualToString:@""]) {
+    if ([[[self textField] text] isEqualToString:@""] || [[[self textField] text] isEqualToString:@"$"] ) {
         _textFieldIsEmpty = YES;
+        [[self textField] setText:@""];
+        
         CGRect labelFrame   = [[self label] frame];
         labelFrame.origin.x = kPadding;
+        
         [UIView animateWithDuration:0.2 animations:^{
             [[self label] setAlpha:0];
             [[self label] setTextColor:[UIColor lightGrayColor]];
-            
         } completion:^(BOOL finished) {
             [[self label] setFrame:labelFrame];
             [[self label] setAlpha:1];
@@ -156,6 +173,15 @@
     } else {
         _textFieldIsEmpty = NO;
     }
+}
+
+- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (_cellConfiguration == kPrice && range.location == 0)  {
+            return NO;
+    }
+    [self cellTextDidChange:[textField.text stringByReplacingCharactersInRange:range withString:string] configuration:[self cellConfiguration]];
+    return YES;
 }
 
 @end

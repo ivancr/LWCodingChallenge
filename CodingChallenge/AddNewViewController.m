@@ -69,6 +69,7 @@ static NSString *kReuseIdentifier = @"newRSSEntryCell";
 - (UIBarButtonItem *)doneBarButton {
     if (!_doneBarButton) {
         _doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
+        [[self doneBarButton] setEnabled:NO];
         return _doneBarButton;
     }
     return _doneBarButton;
@@ -154,20 +155,30 @@ static NSString *kReuseIdentifier = @"newRSSEntryCell";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)cellTextDidChange:(NewEntryTableViewCell *)cell {
-    switch (cell.cellConfiguration) {
+- (void)cellTextDidChange:(NSString *) string configuration:(NSUInteger) configuration {
+    switch (configuration) {
         case kTitle:
-            [[self rssEntry] setName:cell.textField.text];
+            [[self rssEntry] setName:string];
             break;
         case kArtist:
-            [[self rssEntry] setArtist:cell.textField.text];
+            [[self rssEntry] setArtist:string];
             break;
         case kPrice:
-            [[self rssEntry] setPrice:cell.textField.text];
+            [[self rssEntry] setPrice:string];
             break;
         default:
             break;
     }
+    [[self doneBarButton] setEnabled:[self allTextFieldsAreFilled]];
+}
+
+- (BOOL)allTextFieldsAreFilled {
+
+    bool nameIsEmpty    = ([[self rssEntry] name].length < 1);
+    bool artistIsEmpty  = ([[self rssEntry] artist].length < 1);
+    bool priceIsEmpty   = ([[self rssEntry] price].length < 2);
+
+    return (!nameIsEmpty && !artistIsEmpty && !priceIsEmpty);
 }
 
 @end
