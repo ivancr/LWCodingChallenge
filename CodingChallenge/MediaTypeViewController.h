@@ -10,6 +10,8 @@
 
 @interface MediaTypeViewController : UIViewController
 
-@property (nonatomic, strong) NSString *mediaType;
+@property (nonatomic, strong, readonly) NSString *mediaType;
+
+- (void)setMediaType:(NSString *)mediaType;
 
 @end

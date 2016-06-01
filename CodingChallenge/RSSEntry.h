@@ -2,7 +2,7 @@
 //  RSSEntry.h
 //  CodingChallenge
 //
-//  Created by Iván Corchado Ruiz on 5/23/16.
+//  Created by Iván Corchado Ruiz on 5/31/16.
 //  Copyright © 2016 Iván Corchado Ruiz. All rights reserved.
 //
 

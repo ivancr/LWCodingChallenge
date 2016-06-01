@@ -11,10 +11,11 @@
 
 extern NSString *const kLWRSSEntryKey;
 extern NSString *const kLWContentTypeKey;
+extern NSString *const kLWRanking;
 
 @interface RSSEntrySerializer : NSObject
 
-+ (void)serializeRssEntryWithDictionary:(NSDictionary *)dictionary mediaType:(NSString *) mediaType;
++ (void)serializeRssEntryWithDictionary:(NSDictionary *)dictionary mediaType:(NSString *) mediaType ranking:(NSString *)ranking;
 + (NSManagedObjectContext *)managedObjectContext;
 
 @end

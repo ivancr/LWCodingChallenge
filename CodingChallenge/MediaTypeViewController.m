@@ -216,7 +216,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kLWRSSEntryKey];
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"(mediaType==%@)", [self mediaType]];
         [request setPredicate:pred];
-        request.sortDescriptors = @[];
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:kLWRanking ascending:YES]];
         _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[self managedObjectContext]
                                                                           sectionNameKeyPath:nil
@@ -225,6 +225,12 @@ static NSString *kImagePlaceholderString    = @"placeholder";
         return _fetchedResultsController;
     }
     return _fetchedResultsController;
+}
+
+#pragma mark - Setters
+
+- (void)setMediaType:(NSString *)mediaType {
+    _mediaType = mediaType;
 }
 
 #pragma mark - TableViewDataSource

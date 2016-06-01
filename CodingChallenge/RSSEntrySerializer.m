@@ -18,12 +18,13 @@ NSString *const kLWContentTypeKey   = @"contentType";
 NSString *const kLWCategoryKey      = @"category";
 NSString *const kLWPriceKey         = @"price";
 NSString *const kLWRSSIdKey         = @"rssId";
+NSString *const kLWRanking          = @"ranking";
 
 NSString *const kLWRSSEntryKey      = @"RSSEntry";
 
 @implementation RSSEntrySerializer
 
-+ (void)serializeRssEntryWithDictionary:(NSDictionary *)dictionary mediaType:(NSString *) mediaType {
++ (void)serializeRssEntryWithDictionary:(NSDictionary *)dictionary mediaType:(NSString *) mediaType ranking:(NSString *)ranking{
     NSManagedObjectContext *context = [self managedObjectContext];
     
     // Temp dictionaries to drill down levels in the JSON dictionary
@@ -96,6 +97,8 @@ NSString *const kLWRSSEntryKey      = @"RSSEntry";
     } else {
         [rssEntry setValue:tempString forKey:kLWPriceKey];
     }
+    
+    [rssEntry setValue:ranking forKey:kLWRanking];
     
     if ([rssEntry hasPersistentChangedValues]) {
         NSError *error;

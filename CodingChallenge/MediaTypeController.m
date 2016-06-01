@@ -18,8 +18,9 @@
 - (void) fetchDataWithMediaType:(NSString *)mediaType completion:(void (^)(NSError *error))completionBlock {
 
     [NetworkingAPI fetchTopTenforMediaType:mediaType numberOfEntries:30 completionHandler:^(NSArray *entries, NSError *error) {
+        
         [entries enumerateObjectsUsingBlock:^(NSDictionary *entry, NSUInteger idx, BOOL *stop) {
-            [RSSEntrySerializer serializeRssEntryWithDictionary:entry mediaType: mediaType];
+            [RSSEntrySerializer serializeRssEntryWithDictionary:entry mediaType:mediaType ranking:[NSString stringWithFormat:@"%lu",(unsigned long)idx]];
         }];
         if (completionBlock) {
             completionBlock(error);
