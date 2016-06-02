@@ -120,6 +120,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
         [[self tableView] setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
         [[self tableView] setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
         [[self tableView] setAllowsSelectionDuringEditing:NO];
+        [[self tableView] setCellLayoutMarginsFollowReadableWidth:NO];
         [[self view] addSubview:_tableView];
         return _tableView;
     }
