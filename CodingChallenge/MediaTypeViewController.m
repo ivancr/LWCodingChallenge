@@ -70,13 +70,8 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
-    CGRect tableViewFrame       = [[self tableView] frame];
-    tableViewFrame.origin.x     = 0;
-    tableViewFrame.origin.y     = 0;
-    tableViewFrame.size.width   = CGRectGetWidth([[self view] frame]);
-    tableViewFrame.size.height  = CGRectGetHeight([[self view] frame]);
-    [[self tableView] setFrame:tableViewFrame];
-    [[self spinnerView] setFrame:tableViewFrame];
+    [[self tableView] setFrame:[[self view] frame]];
+    [[self spinnerView] setFrame:[[self tableView] frame]];
     
     CGRect buttonFrame          = [[self addNewButton] frame];
     buttonFrame.size.width      = CGRectGetWidth([[self view] frame]);
@@ -85,8 +80,6 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     buttonFrame.origin.y        = CGRectGetHeight([[self view] frame]) - buttonFrame.size.height;
     [[self addNewButton] setFrame:buttonFrame];
     [[self buttonBlurView] setFrame:buttonFrame];
-    
-    
     
     [[self tableView] setContentInset:UIEdgeInsetsMake([[self tableView] contentInset].top,
                                                       [[self tableView] contentInset].left,
@@ -115,12 +108,12 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-        [[self tableView] setDelegate:self];
-        [[self tableView] setDataSource:self];
-        [[self tableView] setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-        [[self tableView] setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
-        [[self tableView] setAllowsSelectionDuringEditing:NO];
-        [[self tableView] setCellLayoutMarginsFollowReadableWidth:NO];
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
+        [_tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+        [_tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
+        [_tableView setAllowsSelectionDuringEditing:NO];
+        [_tableView setCellLayoutMarginsFollowReadableWidth:NO];
         [[self view] addSubview:_tableView];
         return _tableView;
     }
@@ -130,10 +123,10 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (UIButton *)addNewButton{
     if (!_addNewButton){
         _addNewButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [[self addNewButton] addTarget:self action:@selector(didTapAddNewEntry) forControlEvents:UIControlEventTouchUpInside];
-        [[self addNewButton] setBackgroundColor:[[UIColor themeTintColor] colorWithAlphaComponent:0.6f]];
-        [[self addNewButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [[self addNewButton] setTitle:@"Add New" forState:UIControlStateNormal];
+        [_addNewButton addTarget:self action:@selector(didTapAddNewEntry) forControlEvents:UIControlEventTouchUpInside];
+        [_addNewButton setBackgroundColor:[[UIColor themeTintColor] colorWithAlphaComponent:0.6f]];
+        [_addNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_addNewButton setTitle:@"Add New" forState:UIControlStateNormal];
         [[self view] insertSubview:_addNewButton aboveSubview:[self buttonBlurView]];
         return _addNewButton;
     }
@@ -144,7 +137,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     if (!_buttonBlurView) {
         UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         _buttonBlurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        [[self buttonBlurView] setUserInteractionEnabled:NO];
+        [_buttonBlurView setUserInteractionEnabled:NO];
         [[self view] addSubview:_buttonBlurView];
         return _buttonBlurView;
     }
@@ -154,8 +147,8 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (UIView *)spinnerView {
     if (!_spinnerView) {
         _spinnerView = [[UIView alloc] init];
-        [[self spinnerView] setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.2]];
-        [[self spinnerView] setHidden:YES];
+        [_spinnerView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.2]];
+        [_spinnerView setHidden:YES];
         [[self view] insertSubview:_spinnerView aboveSubview:_tableView];
         return _spinnerView;
     }
@@ -165,7 +158,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (UIActivityIndicatorView *)spinner {
     if (!_spinner) {
         _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        [[self spinner] setColor: [UIColor themeTintColor]];
+        [_spinner setColor: [UIColor themeTintColor]];
         [[self spinnerView] addSubview:_spinner];
         return _spinner;
     }
@@ -175,11 +168,11 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (UILabel *)spinnerLabel{
     if (!_spinnerLabel) {
         _spinnerLabel = [[UILabel alloc] init];
-        [[self spinnerLabel] setText: kLocStringLoading];
-        [[self spinnerLabel] setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightThin]];
-        [[self spinnerLabel] setTextAlignment:NSTextAlignmentCenter];
-        [[self spinnerLabel] setTextColor:[UIColor themeTintColor]];
-        [[self spinnerLabel] sizeToFit];
+        [_spinnerLabel setText: kLocStringLoading];
+        [_spinnerLabel setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightThin]];
+        [_spinnerLabel setTextAlignment:NSTextAlignmentCenter];
+        [_spinnerLabel setTextColor:[UIColor themeTintColor]];
+        [_spinnerLabel sizeToFit];
         [[self spinnerView] addSubview:_spinnerLabel];
         return _spinnerLabel;
     }
@@ -200,9 +193,9 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (UIRefreshControl *)refreshControl {
     if (!_refreshControl) {
         _refreshControl = [[UIRefreshControl alloc] init];
-        [[self refreshControl] setBackgroundColor:[UIColor themeTintColor]];
-        [[self refreshControl] setTintColor:[UIColor whiteColor]];
-        [[self refreshControl] addTarget:self
+        [_refreshControl setBackgroundColor:[UIColor themeTintColor]];
+        [_refreshControl setTintColor:[UIColor whiteColor]];
+        [_refreshControl addTarget:self
                             action:@selector(refreshCurrentList)
                   forControlEvents:UIControlEventValueChanged];
         [[self tableView] addSubview:self.refreshControl];
@@ -222,7 +215,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
                                                                         managedObjectContext:[self managedObjectContext]
                                                                           sectionNameKeyPath:nil
                                                                                    cacheName:nil];
-        [self.fetchedResultsController setDelegate:self];
+        [_fetchedResultsController setDelegate:self];
         return _fetchedResultsController;
     }
     return _fetchedResultsController;
@@ -261,7 +254,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
         return kCellHeight;
     }
     
-    if ([_editingIndexPath isEqual: indexPath]) {
+    if ([[self editingIndexPath] isEqual: indexPath]) {
         return (kCellHeight * 2) + 80;
     }
     return kCellHeight;

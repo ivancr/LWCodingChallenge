@@ -18,7 +18,6 @@
     return [UIColor colorWithRed:54/255.0f green:204/255.0 blue:165/255.0 alpha:1.0];
 }
 
-
 + (UIColor *) detailTitleColor {
     return [UIColor whiteColor];
 }
@@ -50,6 +49,10 @@
 
 + (UIFont *) cellMediaTypeArtistFont {
     return [UIFont systemFontOfSize:15 weight:UIFontWeightLight];
+}
+
++ (UIFont *) cellMediaTypeRankingFont {
+    return [UIFont systemFontOfSize:13 weight:UIFontWeightMedium];
 }
 
 @end

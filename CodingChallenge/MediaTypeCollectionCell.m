@@ -57,10 +57,10 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        [[self titleLabel] setTextColor:[UIColor themeTintColor]];
-        [[self titleLabel] setTextAlignment:NSTextAlignmentCenter];
-        [[self titleLabel] setFont:[UIFont collectionTitleFont]];
-        [[self titleLabel] setNumberOfLines:0];
+        [_titleLabel setTextColor:[UIColor themeTintColor]];
+        [_titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_titleLabel setFont:[UIFont collectionTitleFont]];
+        [_titleLabel setNumberOfLines:0];
         [self addSubview:_titleLabel];
         return _titleLabel;
     }
@@ -70,7 +70,7 @@
 - (UIImageView *)imageView {
     if (!_imageView) {
         _imageView = [[UIImageView alloc] init];
-        [[self imageView] setContentMode:UIViewContentModeScaleAspectFit];
+        [_imageView setContentMode:UIViewContentModeScaleAspectFit];
         [self addSubview:_imageView];
         return _imageView;
     }

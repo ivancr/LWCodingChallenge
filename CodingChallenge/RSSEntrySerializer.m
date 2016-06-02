@@ -98,7 +98,7 @@ NSString *const kLWRSSEntryKey      = @"RSSEntry";
         [rssEntry setValue:tempString forKey:kLWPriceKey];
     }
     
-    [rssEntry setValue:ranking forKey:kLWRanking];
+    [rssEntry setValue:[NSString stringWithFormat:@"%02ld",(long)[ranking integerValue]] forKey:kLWRanking];
     
     if ([rssEntry hasPersistentChangedValues]) {
         NSError *error;

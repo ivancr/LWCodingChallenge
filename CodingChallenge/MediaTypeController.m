@@ -20,7 +20,7 @@
     [NetworkingAPI fetchTopTenforMediaType:mediaType numberOfEntries:30 completionHandler:^(NSArray *entries, NSError *error) {
         
         [entries enumerateObjectsUsingBlock:^(NSDictionary *entry, NSUInteger idx, BOOL *stop) {
-            [RSSEntrySerializer serializeRssEntryWithDictionary:entry mediaType:mediaType ranking:[NSString stringWithFormat:@"%lu",(unsigned long)idx]];
+            [RSSEntrySerializer serializeRssEntryWithDictionary:entry mediaType:mediaType ranking:[NSString stringWithFormat:@"%lu",(unsigned long)idx+1]];
         }];
         if (completionBlock) {
             completionBlock(error);
