@@ -25,5 +25,6 @@
 + (UIFont *) detailHeaderFont;
 + (UIFont *) cellMediaTypeNameFont;
 + (UIFont *) cellMediaTypeArtistFont;
++ (UIFont *) cellMediaTypeRankingFont;
 
 @end

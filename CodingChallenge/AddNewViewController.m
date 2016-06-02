@@ -140,6 +140,7 @@ static NSString *kReuseIdentifier = @"newRSSEntryCell";
     [[self rssEntry] setReleaseDate:@"N/A"];
     [[self rssEntry] setImageURL:@"N/A"];
     [[self rssEntry] setContentType:@"N/A"];
+    [[self rssEntry] setRanking:@"0"];
     
     if ([[self rssEntry] hasPersistentChangedValues]) {
         NSError *error;

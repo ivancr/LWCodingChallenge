@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) UILabel       *entryArtist;
 @property (nonatomic, strong) UILabel       *price;
+@property (nonatomic, strong) UILabel       *rankingLabel;
 @property (nonatomic, strong) UIImageView   *entryImageView;
 @property (nonatomic, strong) UIView        *wrapperLabelsView;
 
@@ -66,10 +67,17 @@
         [[self wrapperLabelsView] setFrame:wrapperFrame];
     }
     
-    CGRect entryNameFrame       = [[self entryName] frame];
-    entryNameFrame.size.width   = CGRectGetWidth(wrapperFrame);
-    entryNameFrame.origin       = CGPointZero;
+    CGRect entryRankingFrame         = [[self rankingLabel] frame];
+    entryRankingFrame.origin.x       = CGRectGetWidth([[self wrapperLabelsView] bounds]) - entryRankingFrame.size.width - kPadding8px;
+    entryRankingFrame.origin.y       = 0;
+    entryRankingFrame.size.height    = CGRectGetHeight([[self entryName] bounds]);
+    [[self rankingLabel] setFrame:entryRankingFrame];
+    
+    CGRect entryNameFrame           = [[self entryName] frame];
+    entryNameFrame.size.width       = CGRectGetMinX([[self rankingLabel] frame]) - kPadding8px;
+    entryNameFrame.origin           = CGPointZero;
     [[self entryName] setFrame:entryNameFrame];
+    
     
     CGRect entryPriceFrame         = [[self price] frame];
     entryPriceFrame.origin.x       = CGRectGetWidth([[self wrapperLabelsView] bounds]) - entryPriceFrame.size.width - kPadding8px;
@@ -137,6 +145,18 @@
     return _price;
 }
 
+- (UILabel *)rankingLabel{
+    if (!_rankingLabel){
+        _rankingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [_rankingLabel setTextColor: [UIColor themeTintColor]];
+        [_rankingLabel setTextAlignment: NSTextAlignmentRight];
+        [_rankingLabel setFont: [UIFont cellMediaTypeRankingFont]];
+        [[self wrapperLabelsView] addSubview:_rankingLabel];
+        return _rankingLabel;
+    }
+    return _rankingLabel;
+}
+
 - (UIImageView *)entryImageView {
     if (!_entryImageView) {
         _entryImageView = [[UIImageView alloc] initWithFrame: CGRectZero];
@@ -149,13 +169,11 @@
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    _entryName.text         = nil;
-    _entryArtist.text       = nil;
-    _price.text           = nil;
-    _entryImageView.image   = nil;
+    
     [[self entryName]   setText: nil];
     [[self entryArtist] setText: nil];
     [[self price]       setText: nil];
+    [[self rankingLabel]setText: nil];
     [[self entryImageView] setImage: nil];
 }
 
@@ -172,6 +190,10 @@
     
     [[self price] setText:rssEntry.price];
     [[self price] sizeToFit];
+    
+    NSString *ranking = [NSString stringWithFormat:@"%d",[rssEntry.ranking intValue]];
+    [[self rankingLabel] setText:[@"#" stringByAppendingString:ranking]];
+    [[self rankingLabel] sizeToFit];
     
     NSURL *imageURL = [[NSURL alloc] initWithString:rssEntry.imageURL];
     [[self entryImageView] sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:kImagePlaceholderString]];
