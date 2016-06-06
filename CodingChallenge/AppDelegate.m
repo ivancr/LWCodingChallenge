@@ -7,6 +7,8 @@
 //
 
 #import "MainCollectionViewController.h"
+#import "RssEntryDetailViewController.h"
+#import "SplitRootViewController.h"
 #import "UIColor+LWColors.h"
 #import "AppDelegate.h"
 
@@ -40,10 +42,20 @@
 
 - (void) setupRootViewController {
     
-    MainCollectionViewController *mainCollectionVC = [[MainCollectionViewController alloc] init];
+    MainCollectionViewController    *masterVC   = [[MainCollectionViewController alloc] init];
+    RssEntryDetailViewController    *detailVC   = [[RssEntryDetailViewController alloc] init];
+    [masterVC.mediaTypeVC setDelegate:(id)detailVC];
     
-    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:mainCollectionVC];
-    self.window.rootViewController = navController;
+    UINavigationController *navMasterController = [[UINavigationController alloc] initWithRootViewController:masterVC];
+    UINavigationController *navDetailController = [[UINavigationController alloc] initWithRootViewController:detailVC];
+    
+    SplitRootViewController *rootSplitVC             = [[SplitRootViewController alloc] init];
+    [rootSplitVC setViewControllers:@[navMasterController, navDetailController]];
+    
+    [[detailVC navigationItem] setLeftBarButtonItem:rootSplitVC.displayModeButtonItem];
+    
+    
+    [[self window] setRootViewController:rootSplitVC];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

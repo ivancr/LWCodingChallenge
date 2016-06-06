@@ -14,6 +14,7 @@
 + (UIColor *) aquaGreen;
 + (UIColor *) detailTitleColor;
 + (UIColor *) detailHeaderColor;
++ (UIColor *) veryLightGray;
 
 @end
 

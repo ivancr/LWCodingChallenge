@@ -7,11 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSSEntry.h"
 
-@interface MediaTypeViewController : UIViewController
+@protocol MediaTypeDelegate;
+
+@interface MediaTypeViewController : UIViewController <UISplitViewControllerDelegate>
 
 @property (nonatomic, strong, readonly) NSString *mediaType;
+@property (nonatomic, weak            ) id <MediaTypeDelegate> delegate;
 
 - (void)setMediaType:(NSString *)mediaType;
+
+@end
+
+@protocol MediaTypeDelegate <NSObject>
+
+- (void)selectedRSSEntry:(RSSEntry *)rssEntry;
 
 @end

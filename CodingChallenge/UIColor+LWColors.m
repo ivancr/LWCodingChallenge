@@ -26,6 +26,10 @@
     return [UIColor colorWithRed:59/255.0 green:93/255.0 blue:96/255.0 alpha:1.0];
 }
 
++ (UIColor *) veryLightGray {
+    return [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
+}
+
 @end
 
 

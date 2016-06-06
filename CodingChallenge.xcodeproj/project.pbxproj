@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E0007C41D00B8B90029DC24 /* SplitRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E0007C31D00B8B90029DC24 /* SplitRootViewController.m */; };
 		2EBFD6BB1CEE68E000BE75BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6BA1CEE68E000BE75BA /* main.m */; };
 		2EBFD6BE1CEE68E000BE75BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6BD1CEE68E000BE75BA /* AppDelegate.m */; };
 		2EBFD6C71CEE68E000BE75BA /* CodingChallenge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD6C51CEE68E000BE75BA /* CodingChallenge.xcdatamodeld */; };
@@ -50,7 +51,6 @@
 		2EBFD7641CEE6B2300BE75BA /* MediaTypeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7621CEE6B2300BE75BA /* MediaTypeCollectionCell.m */; };
 		2EBFD7721CEE6B3800BE75BA /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7671CEE6B3800BE75BA /* MainController.m */; };
 		2EBFD7731CEE6B3800BE75BA /* MediaTypeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7691CEE6B3800BE75BA /* MediaTypeController.m */; };
-		2EBFD7741CEE6B3800BE75BA /* RssEntryDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD76B1CEE6B3800BE75BA /* RssEntryDetailController.m */; };
 		2EBFD7751CEE6B3800BE75BA /* MainCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD76D1CEE6B3800BE75BA /* MainCollectionViewController.m */; };
 		2EBFD7761CEE6B3800BE75BA /* MediaTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD76F1CEE6B3800BE75BA /* MediaTypeViewController.m */; };
 		2EBFD7771CEE6B3800BE75BA /* RssEntryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFD7711CEE6B3800BE75BA /* RssEntryDetailViewController.m */; };
@@ -81,6 +81,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E0007C21D00B8B90029DC24 /* SplitRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitRootViewController.h; sourceTree = "<group>"; };
+		2E0007C31D00B8B90029DC24 /* SplitRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitRootViewController.m; sourceTree = "<group>"; };
 		2E9D706C1CEE700E00174EAB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EBFD6B61CEE68E000BE75BA /* CodingChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EBFD6BA1CEE68E000BE75BA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -173,8 +175,6 @@
 		2EBFD7671CEE6B3800BE75BA /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		2EBFD7681CEE6B3800BE75BA /* MediaTypeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTypeController.h; sourceTree = "<group>"; };
 		2EBFD7691CEE6B3800BE75BA /* MediaTypeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTypeController.m; sourceTree = "<group>"; };
-		2EBFD76A1CEE6B3800BE75BA /* RssEntryDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RssEntryDetailController.h; sourceTree = "<group>"; };
-		2EBFD76B1CEE6B3800BE75BA /* RssEntryDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RssEntryDetailController.m; sourceTree = "<group>"; };
 		2EBFD76C1CEE6B3800BE75BA /* MainCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainCollectionViewController.h; sourceTree = "<group>"; };
 		2EBFD76D1CEE6B3800BE75BA /* MainCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainCollectionViewController.m; sourceTree = "<group>"; };
 		2EBFD76E1CEE6B3800BE75BA /* MediaTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTypeViewController.h; sourceTree = "<group>"; };
@@ -248,6 +248,8 @@
 			children = (
 				2EBFD6BC1CEE68E000BE75BA /* AppDelegate.h */,
 				2EBFD6BD1CEE68E000BE75BA /* AppDelegate.m */,
+				2E0007C21D00B8B90029DC24 /* SplitRootViewController.h */,
+				2E0007C31D00B8B90029DC24 /* SplitRootViewController.m */,
 				2EBFD75A1CEE6B0000BE75BA /* Model */,
 				2EEBA99A1CF60269002D8E2F /* Initial Collection View */,
 				2EEBA99B1CF6027C002D8E2F /* RSS Entries TableView */,
@@ -410,8 +412,6 @@
 			isa = PBXGroup;
 			children = (
 				2EBFD7591CEE6AF900BE75BA /* View */,
-				2EBFD76A1CEE6B3800BE75BA /* RssEntryDetailController.h */,
-				2EBFD76B1CEE6B3800BE75BA /* RssEntryDetailController.m */,
 				2EBFD7701CEE6B3800BE75BA /* RssEntryDetailViewController.h */,
 				2EBFD7711CEE6B3800BE75BA /* RssEntryDetailViewController.m */,
 			);
@@ -457,7 +457,6 @@
 				2EEBA99E1CF60372002D8E2F /* View */,
 				2EEBA9921CF50C87002D8E2F /* AddNewViewController.h */,
 				2EEBA9931CF50C87002D8E2F /* AddNewViewController.m */,
-				2EEBA9991CF6022C002D8E2F /* AddNewEntryDelegate.h */,
 			);
 			name = "Add New Entry";
 			sourceTree = "<group>";
@@ -476,6 +475,7 @@
 			children = (
 				2EEBA9A71CF7528D002D8E2F /* NewEntryTableViewCell.h */,
 				2EEBA9A81CF7528D002D8E2F /* NewEntryTableViewCell.m */,
+				2EEBA9991CF6022C002D8E2F /* AddNewEntryDelegate.h */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -620,6 +620,7 @@
 				2EBFD73F1CEE69F600BE75BA /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				2EBFD7631CEE6B2300BE75BA /* RSSEntryTableviewCell.m in Sources */,
 				2EBFD7641CEE6B2300BE75BA /* MediaTypeCollectionCell.m in Sources */,
+				2E0007C41D00B8B90029DC24 /* SplitRootViewController.m in Sources */,
 				2EBFD7361CEE69F600BE75BA /* UIImage+MultiFormat.m in Sources */,
 				2EEBA9941CF50C87002D8E2F /* AddNewViewController.m in Sources */,
 				2EBFD7761CEE6B3800BE75BA /* MediaTypeViewController.m in Sources */,
@@ -639,7 +640,6 @@
 				2EBFD7391CEE69F600BE75BA /* UIImageView+WebCache.m in Sources */,
 				2EBFD7301CEE69F600BE75BA /* SDWebImageDownloader.m in Sources */,
 				2EBFD7571CEE6A2100BE75BA /* AFURLResponseSerialization.m in Sources */,
-				2EBFD7741CEE6B3800BE75BA /* RssEntryDetailController.m in Sources */,
 				2EBFD73A1CEE69F600BE75BA /* UIView+WebCacheOperation.m in Sources */,
 				2EBFD7411CEE69F600BE75BA /* UIImageView+AFNetworking.m in Sources */,
 				2EBFD7891CEE6BCA00BE75BA /* NetworkingAPI.m in Sources */,

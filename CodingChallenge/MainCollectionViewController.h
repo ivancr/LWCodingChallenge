@@ -6,8 +6,11 @@
 //  Copyright © 2016 dgtl. All rights reserved.
 //
 
+#import "MediaTypeViewController.h"
 #import <UIKit/UIKit.h>
 
 @interface MainCollectionViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, strong) MediaTypeViewController   *mediaTypeVC;
 
 @end

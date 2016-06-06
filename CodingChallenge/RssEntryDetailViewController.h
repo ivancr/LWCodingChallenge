@@ -11,8 +11,4 @@
 
 @interface RssEntryDetailViewController : UIViewController
 
-@property (nonatomic, strong, readonly) RSSEntry *rssEntry;
-
--(void)setRssEntry:(RSSEntry *)rssEntry;
-
 @end

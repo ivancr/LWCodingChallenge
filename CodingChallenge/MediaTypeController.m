@@ -31,6 +31,7 @@
 - (NSUInteger)countForRSSEntries:(NSString *)mediaType {
     AppDelegate *appDelegate        = [[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *context = appDelegate.managedObjectContext;
+    
     NSFetchRequest *request         = [NSFetchRequest fetchRequestWithEntityName:kLWRSSEntryKey];
     [request setPredicate:[self predicateWithMediaType:mediaType]];
     

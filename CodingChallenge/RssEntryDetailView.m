@@ -6,6 +6,7 @@
 //  Copyright © 2016 dgtl. All rights reserved.
 //
 
+#import "MediaTypeViewController.h"
 #import "UIImageView+WebCache.h"
 #import "RssEntryDetailView.h"
 #import "UIColor+LWColors.h"
@@ -19,6 +20,7 @@
 #define kLocStringArtist        NSLocalizedString(@"Artist", @"Artist")
 #define kLocStringCategory      NSLocalizedString(@"Category", @"Category")
 #define kLocStringReleaseDate   NSLocalizedString(@"Release Date", @"Release Date")
+#define kLocStringEmpty         NSLocalizedString(@"Nothing to see here...", @"Nothing to see here...")
 
 
 @interface RssEntryDetailView()
@@ -35,7 +37,9 @@
 @property (nonatomic, strong) UIView            *imageWrapperView;
 @property (nonatomic, strong) UIView            *labelsWrapperView;
 @property (nonatomic, strong) CAGradientLayer   *backgroundGradient;
-
+@property (nonatomic, strong) UIView            *emptyView;
+@property (nonatomic, strong) UIVisualEffectView*blurView;
+@property (nonatomic, strong) UILabel           *emptyLabel;
 @property (nonatomic, strong) RSSEntry          *rssEntry;
 
 @end
@@ -44,6 +48,14 @@
 
 - (void) layoutSubviews {
     [super layoutSubviews];
+    
+    [[self emptyView] setFrame:[self bounds]];
+    [[self blurView] setFrame:[self bounds]];
+    
+    CGRect emptyFrame = [[self emptyLabel] frame];
+    emptyFrame.origin = CGPointMake(8, [self emptyView].center.y-100);
+    emptyFrame.size = CGSizeMake(CGRectGetWidth([self bounds]) - 16, CGRectGetHeight([[self emptyLabel] frame]));
+    [_emptyLabel setFrame:emptyFrame];
     
     CGFloat screenWidthMinusMargin  = CGRectGetWidth([_labelsWrapperView frame]) - (kPadding*2);
     CGRect artistLabelHeight = [[self artistLabel].text boundingRectWithSize:CGSizeMake(screenWidthMinusMargin, CGFLOAT_MAX)
@@ -266,6 +278,43 @@
     return _backgroundGradient;
 }
 
+- (UIView *)emptyView {
+    if (!_emptyView) {
+        _emptyView = [[UIView alloc] init];
+        [_emptyView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.2]];
+        [_emptyView setHidden:NO];
+        [self addSubview:_emptyView];
+        [self bringSubviewToFront:_emptyView];
+        return _emptyView;
+    }
+    return _emptyView;
+}
+
+- (UIVisualEffectView *)blurView {
+    if (!_blurView) {
+        UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        _blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        [_blurView setUserInteractionEnabled:NO];
+        [[self emptyView] addSubview:_blurView];
+        return _blurView;
+    }
+    return _blurView;
+}
+
+- (UILabel *)emptyLabel{
+    if (!_emptyLabel) {
+        _emptyLabel = [[UILabel alloc] init];
+        [_emptyLabel setText: kLocStringEmpty];
+        [_emptyLabel setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightLight]];
+        [_emptyLabel setTextAlignment:NSTextAlignmentCenter];
+        [_emptyLabel setTextColor:[UIColor whiteColor]];
+        [_emptyLabel sizeToFit];
+        [[self emptyView] addSubview:_emptyLabel];
+        return _emptyLabel;
+    }
+    return _emptyLabel;
+}
+
 #pragma mark - Setters
 
 -(void)setConfiguration:(SizeClass)configuration {
@@ -275,8 +324,17 @@
 - (void)setRssEntry:(RSSEntry *)rssEntry {
     _rssEntry = rssEntry;
     
+    if (_rssEntry != nil) {
+        [UIView animateWithDuration:0.6 animations:^{
+            [[self emptyView] setHidden:YES];
+        }];
+    }
+    
     [[self titleLabel] setText:[[self rssEntry].name capitalizedString]];
+    [[self titleLabel] sizeToFit];
+    
     [[self artistLabel] setText:[[self rssEntry].artist capitalizedString]];
+    [[self artistLabel] sizeToFit];
     
     [[self dateLabel] setText:[[self rssEntry].releaseDate capitalizedString]];
     [[self dateLabel] sizeToFit];
@@ -286,6 +344,8 @@
     
     NSURL *imageURL = [[NSURL alloc] initWithString:[self rssEntry].imageURL];
     [[self image] sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:kImagePlaceholderString]];
+    
+    [self setNeedsLayout];
 }
 
 - (void)setViewsToInitialStateForAnimations {

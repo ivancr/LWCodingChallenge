@@ -8,10 +8,12 @@
 
 #import "RssEntryDetailViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "MediaTypeViewController.h"
+#import "SplitRootViewController.h"
 #import "RssEntryDetailView.h"
 #import "UIColor+LWColors.h"
 
-@interface RssEntryDetailViewController()
+@interface RssEntryDetailViewController() <MediaTypeDelegate>
 
 @property (nonatomic, strong) RssEntryDetailView    *detailView;
 
@@ -22,10 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setTitle:[self rssEntry].contentType];
     [[self view] setBackgroundColor:[UIColor themeTintColor]];
-    
-    [[self detailView] setRssEntry:_rssEntry];
     [[self detailView] setViewsToInitialStateForAnimations];
     [[self detailView] animateImageAtFirstLaunch];
 }
@@ -56,11 +55,11 @@
     return _detailView;
 }
 
-#pragma mark - Setters
+#pragma mark - MediaTypeDelegate
 
--(void)setRssEntry:(RSSEntry *)rssEntry {
-    _rssEntry = rssEntry;
-    [_detailView setRssEntry:_rssEntry];
+- (void)selectedRSSEntry:(RSSEntry *)rssEntry {
+    [self setTitle:rssEntry.contentType];
+    [[self detailView] setRssEntry:rssEntry];
 }
 
 @end

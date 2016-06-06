@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NewEntryTableViewCell.h"
 
 @protocol AddNewEntryDelegate <NSObject>
 

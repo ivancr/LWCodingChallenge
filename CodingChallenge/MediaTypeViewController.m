@@ -15,7 +15,7 @@
 #import "RSSEntrySerializer.h"
 #import "UIColor+LWColors.h"
 #import "AppDelegate.h"
-#import "RSSEntry.h"
+
 
 static NSString *kReuseIdentifier           = @"rssEntryCell";
 static NSString *kImagePlaceholderString    = @"placeholder";
@@ -56,7 +56,6 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     [self refreshControl];
     [[self tableView] registerClass:[RSSEntryTableviewCell class] forCellReuseIdentifier:kReuseIdentifier];
     [[self navigationItem] setRightBarButtonItem:[self editBarButton]];
-    
     [self setUpTitles];
 }
 
@@ -65,7 +64,6 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     [self loadTopTenRssFeeds];
     
 }
-
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
@@ -133,7 +131,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     return _addNewButton;
 }
 
-- (UIVisualEffectView *)buttonBlurView{
+- (UIVisualEffectView *)buttonBlurView {
     if (!_buttonBlurView) {
         UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         _buttonBlurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -208,8 +206,6 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 - (NSFetchedResultsController *)fetchedResultsController {
     if (!_fetchedResultsController) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kLWRSSEntryKey];
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(mediaType==%@)", [self mediaType]];
-        [request setPredicate:pred];
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:kLWRanking ascending:YES]];
         _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[self managedObjectContext]
@@ -241,60 +237,18 @@ static NSString *kImagePlaceholderString    = @"placeholder";
     
     RSSEntryTableviewCell *cell = [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
 //    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell setRssEntry:[[self fetchedResultsController] objectAtIndexPath:indexPath]];
-    [cell setIsSelected:(_editingIndexPath == indexPath)];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[self tableView] isEditing]) {
-        return kCellHeight;
-    }
-    
-    if ([[self editingIndexPath] isEqual: indexPath]) {
-        return (kCellHeight * 2) + 80;
-    }
     return kCellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    RSSEntryTableviewCell *currentCell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    // First time any cell is selected
-    if (![_lastCellSelected isEqual:currentCell] && _editingIndexPath == nil) {
-        
-        [currentCell setIsSelected:YES];
-        _lastCellSelected = currentCell;
-        _editingIndexPath = indexPath;
-    
-    // Last Cell selected is the same now
-    } else if (_lastCellSelected == currentCell) {
-        
-        [currentCell setIsSelected:NO];
-        _editingIndexPath = nil;
-        _lastCellSelected = nil;
-    
-    // A diffent cell selected while another cell is being selected
-    } else if (![_lastCellSelected isEqual:currentCell] && _editingIndexPath != nil) {
-        
-        [_lastCellSelected setIsSelected:NO];
-        [currentCell setIsSelected:YES];
-        _lastCellSelected = currentCell;
-        _editingIndexPath = indexPath;
-    }
-    
-    [[self tableView] beginUpdates];
-    [[self tableView] endUpdates];
-    
-//    [[self tableView] deselectRowAtIndexPath:indexPath animated:YES];
-//    RssEntryDetailViewController *rssEntryVC = [[RssEntryDetailViewController alloc] init];
-//    [rssEntryVC setRssEntry:[[self controller].rssEntries objectAtIndex:indexPath.row]];
-//    
-//    [self.navigationController pushViewController:rssEntryVC animated:YES];
+    [self selectedRSSEntry:[[self fetchedResultsController] objectAtIndexPath:indexPath]];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -344,6 +298,12 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [[self tableView] endUpdates];
+}
+
+- (void)selectedRSSEntry:(RSSEntry *)rssEntry {
+    if ([[self delegate] respondsToSelector:@selector(selectedRSSEntry:)]) {
+        [[self delegate] selectedRSSEntry:rssEntry];
+    }
 }
 
 #pragma mark - Selectors
@@ -447,6 +407,7 @@ static NSString *kImagePlaceholderString    = @"placeholder";
 
 - (void)performFRCFetch {
     NSError *error = nil;
+    [[self.fetchedResultsController fetchRequest] setPredicate:[NSPredicate predicateWithFormat:@"(mediaType==%@)", [self mediaType]]];
     [self.fetchedResultsController performFetch:&error];
 }
 

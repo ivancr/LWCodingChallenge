@@ -8,21 +8,21 @@
 
 #import "MainCollectionViewController.h"
 #import "MediaTypeCollectionCell.h"
-#import "MediaTypeViewController.h"
+#import "UIColor+LWColors.h"
 #import "MainController.h"
 
 static NSString *reuseIdentifier = @"mediaTypeCell";
 
 #define kLocStringBack          NSLocalizedString(@"Back", @"Back")
-#define kLocStringNavTitle      NSLocalizedString(@"iTunes Store Top 10","iTunes Store Top 10")
+#define kLocStringNavTitle      NSLocalizedString(@"iTunes Store Top 30","iTunes Store Top 30")
 
 #define kCellHeight             (150)
 #define kCellSeparatorHeight    (  2)
 
 @interface MainCollectionViewController ()
 
-@property (nonatomic, strong) UICollectionView *mediaTypesCollectionView;
-@property (nonatomic, strong) MainController *controller;
+@property (nonatomic, strong) UICollectionView          *mediaTypesCollectionView;
+@property (nonatomic, strong) MainController            *controller;
 
 @end
 
@@ -50,10 +50,18 @@ static NSString *reuseIdentifier = @"mediaTypeCell";
         _mediaTypesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         [_mediaTypesCollectionView setDataSource:self];
         [_mediaTypesCollectionView setDelegate:self];
-        [_mediaTypesCollectionView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.3]];
+        [_mediaTypesCollectionView setBackgroundColor:[UIColor veryLightGray]];
         [[self view] addSubview:_mediaTypesCollectionView];
     }
     return _mediaTypesCollectionView;
+}
+
+- (MediaTypeViewController *)mediaTypeVC {
+    if (!_mediaTypeVC) {
+        _mediaTypeVC = [[MediaTypeViewController alloc] init];
+        return _mediaTypeVC;
+    }
+    return _mediaTypeVC;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -77,13 +85,11 @@ static NSString *reuseIdentifier = @"mediaTypeCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    MediaTypeViewController *mediaTypeVC = [[MediaTypeViewController alloc] init];
-    
     NSString *key = [[self controller].mediaTypes objectAtIndex:indexPath.row];
-    [mediaTypeVC setTitle:[[self controller].mediaTypesTitles objectForKey:key]];
-    [mediaTypeVC setMediaType:key];
+    [[self mediaTypeVC] setTitle:[[self controller].mediaTypesTitles objectForKey:key]];
+    [[self mediaTypeVC] setMediaType:key];
     
-    [[self navigationController] pushViewController:mediaTypeVC animated:YES];
+    [[self navigationController] pushViewController:[self mediaTypeVC] animated:YES];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

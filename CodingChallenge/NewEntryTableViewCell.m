@@ -74,23 +74,23 @@
 - (UILabel *)label {
     if (!_label) {
         _label = [[UILabel alloc] initWithFrame:CGRectZero];
-        [[self label] setTextColor:[UIColor lightGrayColor]];
+        [_label setTextColor:[UIColor lightGrayColor]];
         switch (_cellConfiguration) {
             case kTitle:
-                [[self label] setText:kLocStringTitle];
+                [_label setText:kLocStringTitle];
                 break;
             case kArtist:
-                [[self label] setText:kLocStringArtist];
+                [_label setText:kLocStringArtist];
                 break;
             case kPrice:
-                [[self label] setText:kLocStringPrice];
+                [_label setText:kLocStringPrice];
                 break;
             default:
-                [[self label] setText:kLocStringUnknown];
+                [_label setText:kLocStringUnknown];
                 break;
         }
-        [[self label] setFont:[UIFont detailHeaderFont]];
-        [[self label] sizeToFit];
+        [_label setFont:[UIFont detailHeaderFont]];
+        [_label sizeToFit];
         [self addSubview:_label];
         return _label;
     }
@@ -100,7 +100,7 @@
 - (UITextField *)textField{
     if (!_textField){
         _textField = [[UITextField alloc] initWithFrame:CGRectZero];
-        [[self textField] setDelegate:self];
+        [_textField setDelegate:self];
         
         switch (_cellConfiguration) {
             case kPrice:
